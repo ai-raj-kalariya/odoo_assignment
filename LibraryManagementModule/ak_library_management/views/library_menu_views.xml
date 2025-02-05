@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem
+            id="ak_library_management_menu"
+            name="Libraries"/>
+
+    <menuitem
+            id="library_library_menu"
+            name="Library"
+            parent="ak_library_management_menu"
+            sequence="10"
+            action="library_library_actions"/>
+
+    <menuitem
+            id="library_management_menu"
+            name="Library Management"
+            parent="ak_library_management_menu"
+            sequence="20"/>
+
+    <menuitem
+            id="library_book_menu"
+            name="Book"
+            parent="library_management_menu"
+            sequence="20"
+            action="library_book_actions"/>
+
+    <menuitem
+            id="library_member_menu"
+            name="Members"
+            parent="ak_library_management_menu"
+            sequence="30"/>
+
+    <menuitem
+            id="library_member_sub_menu"
+            name="Members"
+            parent="library_member_menu"
+            sequence="10"
+            action="library_member_action"/>
+
+    <menuitem
+            id="configuration_menu"
+            name="Configuration"
+            parent="ak_library_management_menu"
+            sequence="40"/>
+
+    <menuitem
+            id="library_book_tags_menu"
+            name="Book Tags"
+            parent="configuration_menu"
+            sequence="20"
+            action="library_book_tags_action"/>
+
+    <menuitem
+            id="library_book_category_menu"
+            name="Book Category"
+            parent="configuration_menu"
+            sequence="30"
+            action="library_book_category_action"/>
+</odoo>

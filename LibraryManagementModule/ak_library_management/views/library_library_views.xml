@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="library_library_list_view" model="ir.ui.view">
+        <field name="name">library.library.list.view</field>
+        <field name="model">library.library</field>
+        <field name="arch" type="xml">
+            <list string="Libraries">
+                <field name="name"/>
+                <field name="location"/>
+                <field name="capacity"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="library_library_form_view" model="ir.ui.view">
+        <field name="name">library.library.form.view</field>
+        <field name="model">library.library</field>
+        <field name="arch" type="xml">
+            <form string="Library">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="location"/>
+                        </group>
+                        <group>
+                            <field name="capacity"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                <!-- book tag view -->
+                    <notebook>
+                        <page string="Books">
+                            <field name="book_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="author"/>
+                                    <field name="isbn"/>
+                                    <field name="publication_date"/>
+                                    <field name="category_id"/>
+                                    <field name="description"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Activity -->
+    <record id="library_library_actions" model="ir.actions.act_window">
+        <field name="name">Libraries</field>
+        <field name="res_model">library.library</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
