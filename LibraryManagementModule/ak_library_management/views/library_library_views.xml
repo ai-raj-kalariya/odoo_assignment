@@ -31,14 +31,14 @@
                 <!-- book tag view -->
                     <notebook>
                         <page string="Books">
-                            <field name="book_ids">
-                                <list editable="bottom">
+                            <field name="product_ids" widget="one2many_list">
+                                <list editable="bottom" create="0" edit="0">
                                     <field name="name"/>
                                     <field name="author"/>
-                                    <field name="isbn"/>
-                                    <field name="publication_date"/>
-                                    <field name="category_id"/>
-                                    <field name="description"/>
+                                    <field name="publisher"/>
+                                    <field name="edition"/>
+                                    <field name="published_date"/>
+                                    <field name="pages"/>
                                 </list>
                             </field>
                         </page>

@@ -9,15 +9,16 @@ class Library(models.Model):
     _description = "library"
 
     name = fields.Char(
-        string = "Name")
+        string="Name")
     location = fields.Char(
-        string = "Location")
+        string="Location")
     capacity = fields.Integer(
-        string = "Capacity")
+        string="Capacity")
     notes = fields.Text(
-        string = "Notes")
+        string="Notes")
     # one to many field for create a book using library tab
-    book_ids = fields.One2many(
-        comodel_name="library.book", # parent model
-        inverse_name="library_id",   # relation field
-         string = "Book")
+    product_ids = fields.Many2many(
+        comodel_name="product.template",  # parent model
+        string="Book",
+        domain="[('is_library_book', '=', True)]"
+    )

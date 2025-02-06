@@ -3,7 +3,7 @@
     "name": "Library",
     "version": "18.0.1.1.0",
     "license": "Other proprietary",
-    "depends": ["base", "web"],
+    "depends": ["sale","web"],
     "author":"Raj",
     "website": "https://www.aktivsoftware.com",
     "data": [
@@ -13,6 +13,7 @@
         "views/library_library_views.xml",
         "views/library_book_views.xml",
         "views/library_member_views.xml",
+        "views/product_template_views.xml",
         "views/library_menu_views.xml"
     ],
     "installable": True,

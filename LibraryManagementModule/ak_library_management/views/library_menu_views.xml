@@ -3,7 +3,7 @@
     <!-- Main Menu -->
     <menuitem
             id="ak_library_management_menu"
-            name="Libraries"/>
+            name="Library Management"/>
 
     <menuitem
             id="library_library_menu"
@@ -13,15 +13,9 @@
             action="library_library_actions"/>
 
     <menuitem
-            id="library_management_menu"
-            name="Library Management"
-            parent="ak_library_management_menu"
-            sequence="20"/>
-
-    <menuitem
             id="library_book_menu"
             name="Book"
-            parent="library_management_menu"
+            parent="ak_library_management_menu"
             sequence="20"
             action="library_book_actions"/>
 
@@ -57,4 +51,18 @@
             parent="configuration_menu"
             sequence="30"
             action="library_book_category_action"/>
+
+    <menuitem
+            id="library_product_template_menu"
+            name="Products"
+                parent="ak_library_management_menu"
+            sequence="50"/>
+
+    <menuitem
+            id="library_product_template_sub_menu"
+            name="Product"
+            parent="library_product_template_menu"
+            sequence="50"
+            action="sale.product_template_action"/>
+    
 </odoo>
