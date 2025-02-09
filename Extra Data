@@ -1,0 +1,14 @@
+Smart Button
+
+# action = self.env['ir.actions.actions']._for_xml_id('product.product_template_action_all')
+# product_ids = self.product_ids
+# if len(product_ids) > 1:
+#     action['domain'] = [('id', 'in', product_ids.ids)]
+# elif len(product_ids) == 1:
+#     action['views'] = [(self.env.ref('product.product_template_form_view').id, 'form')]
+#     action['res_id'] = product_ids.id
+# else:
+#     action = {'type': 'ir.actions.act_window_close'}
+# return action
+
+

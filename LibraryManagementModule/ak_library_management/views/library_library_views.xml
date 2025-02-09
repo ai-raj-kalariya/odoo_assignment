@@ -18,6 +18,14 @@
         <field name="arch" type="xml">
             <form string="Library">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_borrowed_book"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                            <field name="borrowed_book_count" widget="statinfo" string="Borrowed Book"/>
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="name"/>
@@ -28,9 +36,9 @@
                             <field name="notes"/>
                         </group>
                     </group>
-                <!-- book tag view -->
+                    <!-- book tag view -->
                     <notebook>
-                        <page string="Books">
+                        <page string="Product">
                             <field name="product_ids" widget="one2many_list">
                                 <list editable="bottom" create="0" edit="0">
                                     <field name="name"/>
@@ -38,7 +46,9 @@
                                     <field name="publisher"/>
                                     <field name="edition"/>
                                     <field name="published_date"/>
+                                    <field name="available"/>
                                     <field name="pages"/>
+                                    <field name="state"/>
                                 </list>
                             </field>
                         </page>

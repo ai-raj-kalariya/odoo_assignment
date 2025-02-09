@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+"""This is library book category model"""
 from odoo import models, fields
 
 

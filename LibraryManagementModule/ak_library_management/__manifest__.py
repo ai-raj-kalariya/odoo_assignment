@@ -3,7 +3,7 @@
     "name": "Library",
     "version": "18.0.1.1.0",
     "license": "Other proprietary",
-    "depends": ["sale","web"],
+    "depends": ["web", "sale_management"],
     "author":"Raj",
     "website": "https://www.aktivsoftware.com",
     "data": [
