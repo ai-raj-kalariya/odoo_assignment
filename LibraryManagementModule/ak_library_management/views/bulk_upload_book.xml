@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="bulk_upload_book_list_view" model="ir.ui.view">
+        <field name="name">bulk.upload.book.list.view</field>
+        <field name="model">bulk.upload.book</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="book_names"/>
+                <field name="author_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="bulk_upload_book_form_view" model="ir.ui.view">
+        <field name="name">bulk.upload.book.form.view</field>
+        <field name="model">bulk.upload.book</field>
+        <field name="arch" type="xml">
+            <form string="bulk_book">
+                <header>
+                    <div>
+<!--                        <button name="create_book" string="Create Book" type="object"/>-->
+                    </div>
+                    <div>
+                        <button name="revert_changes" string="Revert Changes" type="object"/>
+                    </div>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_create_book"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                            <field name="created_book_count" widget="statinfo" string="Created Book"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="book_names"/>
+                        <field name="author_id" required="true"/>
+                        <field name="category"/>
+                        <field name="price"/>
+                        <field name="product_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="bulk_upload_book_action" model="ir.actions.act_window">
+        <field name="name">Bulk Upload Book</field>
+        <field name="res_model">bulk.upload.book</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

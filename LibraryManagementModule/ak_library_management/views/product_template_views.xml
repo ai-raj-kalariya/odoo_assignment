@@ -31,7 +31,7 @@
                     <group>
                         <group>
                             <field name="is_library_book" required="sale_ok"/>
-                            <field name="author" required="sale_ok"/>
+                            <field name="author_id" required="sale_ok"/>
                             <field name="publisher" required="sale_ok"/>
                             <field name="edition" required="sale_ok"/>
                         </group>

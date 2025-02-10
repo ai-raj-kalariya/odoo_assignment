@@ -4,3 +4,4 @@ library_book_tags,access_library_book_tags,model_library_book_tags,base.group_us
 library_member,access_library_member,model_library_member,base.group_user,1,1,1,1
 library_book_category,access_library_book_category,model_library_book_category,base.group_user,1,1,1,1
 library_library,access_library_library,model_library_library,base.group_user,1,1,1,1
+bulk_upload_book,access_bulk_upload_book,model_bulk_upload_book,base.group_user,1,1,1,1

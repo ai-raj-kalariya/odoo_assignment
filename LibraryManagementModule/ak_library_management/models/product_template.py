@@ -10,7 +10,8 @@ class ProductTemplate(models.Model):
 
     is_library_book = fields.Boolean(
         string="Library Book")
-    author = fields.Char(
+    author_id = fields.Many2one(
+        comodel_name='res.partner',
         string="Author")
     publisher = fields.Char(
         string="Publisher")

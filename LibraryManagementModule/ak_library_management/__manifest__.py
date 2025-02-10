@@ -14,6 +14,7 @@
         "views/library_book_views.xml",
         "views/library_member_views.xml",
         "views/product_template_views.xml",
+        "views/bulk_upload_book.xml",
         "views/library_menu_views.xml"
     ],
     "installable": True,

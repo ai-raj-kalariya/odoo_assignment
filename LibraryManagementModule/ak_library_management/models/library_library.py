@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """This is library  model"""
-from odoo import _, api, models, fields
+from odoo import api, models, fields
 
 
 class Library(models.Model):
@@ -45,7 +45,7 @@ class Library(models.Model):
 
     def action_borrowed_book(self):
         action = {
-            'name': _('Borrowed Books'),
+            'name': 'Borrowed Books',
             'type': 'ir.actions.act_window',
             'view_mode': 'list,form',
             'res_model': 'product.template',

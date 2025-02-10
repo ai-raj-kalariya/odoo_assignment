@@ -64,6 +64,12 @@
             parent="library_product_template_menu"
             sequence="50"
             action="sale.product_template_action"/>
+    <menuitem
+            id="bulk_upload_book_menu"
+            name="Bulk Book"
+            parent="ak_library_management_menu"
+            sequence="60"
+            action="bulk_upload_book_action"/>
 
     <!--Inherit menuitems from sale-->
     <menuitem id="sale.menu_products"
