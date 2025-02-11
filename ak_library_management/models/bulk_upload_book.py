@@ -32,7 +32,6 @@ class BulkUploadBook(models.Model):
         for rec in res:
             if rec.book_names:
                 books = rec.book_names.split(",")
-                print("\n\n\n books : ", books, len(books))
                 for book in books:
                     products = rec.env['product.template'].create({
                         'name': book,
@@ -40,24 +39,28 @@ class BulkUploadBook(models.Model):
                     })
                     rec.product_ids = [(4, products.id)]
                     print("\n\n products : ", products)
-        # hello
         print("\n\n\n book : ", res)
-
         return res
 
-    # def create_book(self):
-    #     created_book = [book for book in self.book_name.split(",")]
+    def action_created_book(self):
+        """
+        This method is used to open list views and form view when click on smart button.
+        """
+        action = {
+            'name': 'Created Books',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'list,form',
+            'res_model': 'product.template',
+            'domain': [('id', 'in', self.product_ids.ids)]
+        }
+        return action
 
     def revert_changes(self):
-        print("\n\n:::::::::::::::::::::::::::revert changes\n")
+        print(self.product_ids.ids)
+        self.env['product.template'].browse(self.product_ids.ids).unlink()
+        self.env['bulk.upload.book'].browse(self.author_id.id).unlink()
 
     @api.depends('author_id')
     def _compute_created_book_count(self):
-        """
-        This method is used to calculate Borrowed books count which are available in borrow state.
-        """
         for book in self:
-            book.created_book_count = 0
-
-    def action_create_book(self):
-        print("\n????????????????????????? book show\n")
+            book.created_book_count = len(book.product_ids) if book and book.product_ids else 0.0
