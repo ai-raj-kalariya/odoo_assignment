@@ -18,7 +18,7 @@
             <form string="bulk_book">
                 <header>
                     <div>
-<!--                        <button name="create" string="Create Book" type="object"/>-->
+                        <button name="create_book" string="Create Book" type="object"/>
                     </div>
                     <div>
                         <button name="revert_changes" string="Revert Changes" type="object"/>

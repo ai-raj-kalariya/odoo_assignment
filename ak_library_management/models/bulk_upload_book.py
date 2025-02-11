@@ -25,22 +25,39 @@ class BulkUploadBook(models.Model):
         string="Created Book"
     )
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        res = super(BulkUploadBook, self).create(vals_list)
-        print("\n\n:::::::::::::::::::", res, res.book_names)
-        for rec in res:
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     res = super(BulkUploadBook, self).create(vals_list)
+    #     print("\n\n:::::::::::::::::::", res, res.book_names)
+    #     for rec in res:
+    #         if rec.book_names:
+    #             books = rec.book_names.split(",")
+    #             for book in books:
+    #                 products = rec.env['product.template'].create({
+    #                     'name': book,
+    #                     'author_id': rec.author_id.id,
+    #                 })
+    #                 rec.product_ids = [(4, products.id)]
+    #                 print("\n\n products : ", products)
+    #     print("\n\n\n book : ", res)
+    #     return res
+    def create_book(self):
+        for rec in self:
             if rec.book_names:
                 books = rec.book_names.split(",")
                 for book in books:
-                    products = rec.env['product.template'].create({
-                        'name': book,
-                        'author_id': rec.author_id.id,
-                    })
-                    rec.product_ids = [(4, products.id)]
-                    print("\n\n products : ", products)
-        print("\n\n\n book : ", res)
-        return res
+                    result = rec.env['product.template'].search([('name', '=', book)])
+                    print("\n\n\n::::::::result::::::",result)
+                    if not result:
+                        products = rec.env['product.template'].create({
+                            'name': book,
+                            'author_id': rec.author_id.id,
+                        })
+                        rec.product_ids = [(4, products.id)]
+                        print("\n\n products : ", products)
+            print("\n\n\n book : ", self)
+        return self
+
 
     def action_created_book(self):
         """
@@ -57,8 +74,7 @@ class BulkUploadBook(models.Model):
 
     def revert_changes(self):
         print(self.product_ids.ids)
-        self.env['product.template'].browse(self.product_ids.ids).unlink()
-        self.env['bulk.upload.book'].browse(self.author_id.id).unlink()
+        self.product_ids.unlink()
 
     @api.depends('author_id')
     def _compute_created_book_count(self):
