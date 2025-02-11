@@ -44,6 +44,9 @@ class Library(models.Model):
             )) if library and library.product_ids else 0.0
 
     def action_borrowed_book(self):
+        """
+        This method is used to open list views and form view when click on smart button.
+        """
         action = {
             'name': 'Borrowed Books',
             'type': 'ir.actions.act_window',
@@ -52,4 +55,3 @@ class Library(models.Model):
             'domain': [('state', '=', 'borrowed'), ('id', 'in', self.product_ids.ids)],
         }
         return action
-

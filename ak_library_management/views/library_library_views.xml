@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!--List view -->
     <record id="library_library_list_view" model="ir.ui.view">
         <field name="name">library.library.list.view</field>
         <field name="model">library.library</field>
@@ -11,13 +12,14 @@
             </list>
         </field>
     </record>
-
+<!--form view -->
     <record id="library_library_form_view" model="ir.ui.view">
         <field name="name">library.library.form.view</field>
         <field name="model">library.library</field>
         <field name="arch" type="xml">
             <form string="Library">
                 <sheet>
+                <!-- smart button for show count of borrowed book -->
                     <div class="oe_button_box" name="button_box">
                         <button name="action_borrowed_book"
                                 type="object"

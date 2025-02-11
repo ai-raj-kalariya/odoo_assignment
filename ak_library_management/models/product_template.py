@@ -33,7 +33,9 @@ class ProductTemplate(models.Model):
     ], string="Book Availability")
 
     def is_borrowed(self):
+        """This method is convert state into borrowed state"""
         self.write({'state': 'borrowed'})
 
     def is_available(self):
+        """This method is convert state into available state"""
         self.write({'state': 'available'})
