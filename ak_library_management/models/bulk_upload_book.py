@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, models, fields
+from openpyxl.compat.product import product
 
 
-class BulkUploadBook(models.Model):
+class BulkUploadBook(models.TransientModel):
     _name = "bulk.upload.book"
     _description = "Bulk upload book"
 
@@ -22,32 +23,15 @@ class BulkUploadBook(models.Model):
     )
     product_ids = fields.Many2many(
         'product.template',
-        string="Created Book"
+        string="Created Product"
     )
 
-    # @api.model_create_multi
-    # def create(self, vals_list):
-    #     res = super(BulkUploadBook, self).create(vals_list)
-    #     print("\n\n:::::::::::::::::::", res, res.book_names)
-    #     for rec in res:
-    #         if rec.book_names:
-    #             books = rec.book_names.split(",")
-    #             for book in books:
-    #                 products = rec.env['product.template'].create({
-    #                     'name': book,
-    #                     'author_id': rec.author_id.id,
-    #                 })
-    #                 rec.product_ids = [(4, products.id)]
-    #                 print("\n\n products : ", products)
-    #     print("\n\n\n book : ", res)
-    #     return res
     def create_book(self):
         for rec in self:
             if rec.book_names:
                 books = rec.book_names.split(",")
                 for book in books:
                     result = rec.env['product.template'].search([('name', '=', book)])
-                    print("\n\n\n::::::::result::::::",result)
                     if not result:
                         products = rec.env['product.template'].create({
                             'name': book,
@@ -63,15 +47,25 @@ class BulkUploadBook(models.Model):
         """
         This method is used to open list views and form view when click on smart button.
         """
-        action = {
-            'name': 'Created Books',
-            'type': 'ir.actions.act_window',
-            'view_mode': 'list,form',
-            'res_model': 'product.template',
-            'domain': [('id', 'in', self.product_ids.ids)]
-        }
-        return action
+        if len(self.product_ids) > 1:
+            action = {
+                'name': 'Created Books',
+                'type': 'ir.actions.act_window',
+                'view_mode': 'list,form',
+                'res_model': 'product.template',
+                'domain': [('id', 'in', self.product_ids.ids)]
+            }
+            return action
+        if len(self.product_ids) == 1:
+            action ={
+                'type': 'ir.actions.act_window',
+                'view_mode':'form',
+                'res_model': 'product.template',
+                'domain': [('id', 'in', self.product_ids.ids)]
+            }
+            print("::::::::::::::::\n\n\nid:::::",self.product_ids.name)
 
+            return action
     def revert_changes(self):
         print(self.product_ids.ids)
         self.product_ids.unlink()

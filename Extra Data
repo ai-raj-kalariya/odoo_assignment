@@ -12,3 +12,19 @@ Smart Button
 # return action
 
 
+ # @api.model_create_multi
+    # def create(self, vals_list):
+    #     res = super(BulkUploadBook, self).create(vals_list)
+    #     print("\n\n:::::::::::::::::::", res, res.book_names)
+    #     for rec in res:
+    #         if rec.book_names:
+    #             books = rec.book_names.split(",")
+    #             for book in books:
+    #                 products = rec.env['product.template'].create({
+    #                     'name': book,
+    #                     'author_id': rec.author_id.id,
+    #                 })
+    #                 rec.product_ids = [(4, products.id)]
+    #                 print("\n\n products : ", products)
+    #     print("\n\n\n book : ", res)
+    #     return res

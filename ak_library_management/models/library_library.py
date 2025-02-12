@@ -10,11 +10,9 @@ class Library(models.Model):
 
     name = fields.Char(
         string="Name",
-        translate=True
     )
     location = fields.Char(
         string="Location",
-        translate=True
     )
     capacity = fields.Integer(
         string="Capacity"
@@ -22,7 +20,7 @@ class Library(models.Model):
     notes = fields.Text(
         string="Notes"
     )
-    # one to many field for create a book using library tab
+    # many to many field for create a book using library tab
     product_ids = fields.Many2many(
         comodel_name="product.template",  # parent model
         string="Book",

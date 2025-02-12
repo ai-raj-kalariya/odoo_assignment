@@ -62,7 +62,7 @@
             id="library_product_template_sub_menu"
             name="Product"
             parent="library_product_template_menu"
-            sequence="50"
+            sequence="1"
             action="sale.product_template_action"/>
     <menuitem
             id="bulk_upload_book_menu"

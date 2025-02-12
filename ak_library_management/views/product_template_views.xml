@@ -31,7 +31,7 @@
                 <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
             </header>
             <xpath expr="//page[@name='inventory']" position="after">
-                <page string="Book Details">
+                <page string="Book Details" name="book_details">
                     <group>
                         <group>
                             <field name="is_library_book" required="sale_ok"/>
@@ -46,6 +46,10 @@
                         </group>
                     </group>
                 </page>
+            </xpath>
+            <!--Change the lable of barcode to ISBN number-->
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name="string">ISBN Number</attribute>
             </xpath>
             <!--move field from general information to Book detail-->
             <xpath expr="//field[@name='available']" position="after">

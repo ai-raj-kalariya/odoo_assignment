@@ -23,9 +23,6 @@ class ProductTemplate(models.Model):
         string="Pages")
     available = fields.Boolean(
         string="Available")
-    # overwrite ISBN Number to existing field barcode label
-    barcode = fields.Integer(
-        string="ISBN Number")
     state = fields.Selection([
         ('available', 'Available'),
         ('borrowed', 'Borrowed'),

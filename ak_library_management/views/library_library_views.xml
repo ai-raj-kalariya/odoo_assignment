@@ -40,8 +40,8 @@
                     </group>
                     <!-- book tag view -->
                     <notebook>
-                        <page string="Product">
-                            <field name="product_ids" widget="one2many_list">
+                        <page string="Product" name="product">
+                            <field name="product_ids">
                                 <list editable="bottom" create="0" edit="0">
                                     <field name="name"/>
                                     <field name="author_id"/>
