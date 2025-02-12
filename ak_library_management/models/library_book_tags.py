@@ -10,10 +10,13 @@ class LibraryBookTags(models.Model):
 
     name = fields.Char(
         string = "Name",
-        required = True)
+        required = True
+    )
     # Use this M2O field to connect library_book_category model M2M field
     library_book_category_id = fields.Many2one(
-        comodel_name = "library.book.category")
+        comodel_name = "library.book.category"
+    )
     # Use this M2O field to connect library_book model M2O field
     library_book_id = fields.Many2one(
-        comodel_name = "library.book") # parent model
+        comodel_name = "library.book" # parent model
+    )

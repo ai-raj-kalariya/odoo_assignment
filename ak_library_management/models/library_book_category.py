@@ -11,9 +11,11 @@ class LibraryBookCategory(models.Model):
 
     name = fields.Char(
         string = "Name",
-        required = True)
+        required = True
+    )
     # select multiple tag
     tag_ids = fields.Many2many(
         "library.book.tags",
         "library_book_category_id",
-        string = "Tags")
+        string = "Tags"
+    )

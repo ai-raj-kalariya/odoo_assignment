@@ -9,20 +9,27 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     is_library_book = fields.Boolean(
-        string="Library Book")
+        string="Library Book"
+    )
     author_id = fields.Many2one(
         comodel_name='res.partner',
-        string="Author")
+        string="Author"
+    )
     publisher = fields.Char(
-        string="Publisher")
+        string="Publisher"
+    )
     edition = fields.Char(
-        string="Edition")
+        string="Edition"
+    )
     published_date = fields.Date(
-        string="Published_date")
+        string="Published_date"
+    )
     pages = fields.Integer(
-        string="Pages")
+        string="Pages"
+    )
     available = fields.Boolean(
-        string="Available")
+        string="Available"
+    )
     state = fields.Selection([
         ('available', 'Available'),
         ('borrowed', 'Borrowed'),

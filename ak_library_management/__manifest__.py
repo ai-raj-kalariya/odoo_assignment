@@ -15,7 +15,8 @@
         "views/library_member_views.xml",
         "views/product_template_views.xml",
         "views/bulk_upload_book.xml",
-        "views/library_menu_views.xml"
+        "views/library_menu_views.xml",
+        "data/ir_sequence_data.xml"
     ],
     "installable": True,
     "auto_install": False,

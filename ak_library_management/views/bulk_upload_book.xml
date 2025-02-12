@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!--list view-->
     <record id="bulk_upload_book_list_view" model="ir.ui.view">
         <field name="name">bulk.upload.book.list.view</field>
         <field name="model">bulk.upload.book</field>
@@ -10,7 +11,7 @@
             </list>
         </field>
     </record>
-
+    <!--form view-->
     <record id="bulk_upload_book_form_view" model="ir.ui.view">
         <field name="name">bulk.upload.book.form.view</field>
         <field name="model">bulk.upload.book</field>
@@ -46,7 +47,7 @@
         </field>
     </record>
 
-
+    <!--Action-->
     <record id="bulk_upload_book_action" model="ir.actions.act_window">
         <field name="name">Bulk Upload Book</field>
         <field name="res_model">bulk.upload.book</field>

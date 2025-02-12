@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!--list view-->
     <record id="library_member_list_view" model="ir.ui.view">
         <field name="name">library.member.list.view</field>
         <field name="model">library.member</field>
@@ -12,7 +13,7 @@
             </list>
         </field>
     </record>
-
+    <!--form view-->
     <record id="library_member_form_view" model="ir.ui.view">
         <field name="name">library.member.form.view</field>
         <field name="model">library.member</field>
@@ -34,7 +35,7 @@
         </field>
     </record>
 
-    <!--Activity-->
+    <!--Action-->
     <record id="library_member_action" model="ir.actions.act_window">
         <field name="name">Members</field>
         <field name="res_model">library.member</field>

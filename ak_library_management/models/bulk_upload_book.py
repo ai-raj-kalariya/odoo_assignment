@@ -1,22 +1,29 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, models, fields
-from openpyxl.compat.product import product
 
 
 class BulkUploadBook(models.TransientModel):
+    """
+    For create multiple books using text field and this multiple book
+    create to separate product in product model
+    """
     _name = "bulk.upload.book"
     _description = "Bulk upload book"
 
     book_names = fields.Text(
-        string="Book Names")
+        string="Book Names"
+    )
     author_id = fields.Many2one(
         comodel_name='res.partner',
-        string="Author")
+        string="Author"
+    )
     category = fields.Char(
-        string="Category")
+        string="Category"
+    )
     price = fields.Float(
-        string="Price")
+        string="Price"
+    )
     created_book_count = fields.Integer(
         compute='_compute_created_book_count',
         string="Created Books"
@@ -27,7 +34,13 @@ class BulkUploadBook(models.TransientModel):
     )
 
     def create_book(self):
+        """
+        Using split() method return separate book which is written in the book text field
+        and if not exist already in product then create product,
+        """
+        print("\n\nself ::::", self, "\n\n")
         for rec in self:
+            print("\n\nrec ::::", rec, "\n\n")
             if rec.book_names:
                 books = rec.book_names.split(",")
                 for book in books:
@@ -42,35 +55,39 @@ class BulkUploadBook(models.TransientModel):
             print("\n\n\n book : ", self)
         return self
 
-
     def action_created_book(self):
         """
         This method is used to open list views and form view when click on smart button.
+        If only one product created then redirect on form view else show list view and form view.
         """
-        if len(self.product_ids) > 1:
-            action = {
-                'name': 'Created Books',
-                'type': 'ir.actions.act_window',
-                'view_mode': 'list,form',
-                'res_model': 'product.template',
-                'domain': [('id', 'in', self.product_ids.ids)]
-            }
-            return action
         if len(self.product_ids) == 1:
-            action ={
+            book_id = self.env['product.template'].search([('name', '=', self.product_ids.name)])
+            return {
                 'type': 'ir.actions.act_window',
-                'view_mode':'form',
+                'view_mode': 'form',
                 'res_model': 'product.template',
-                'domain': [('id', 'in', self.product_ids.ids)]
+                'res_id': book_id.id,
             }
-            print("::::::::::::::::\n\n\nid:::::",self.product_ids.name)
+        return {
+            'name': 'Created Books',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'list,form',
+            'res_model': 'product.template',
+            'domain': [('id', 'in', self.product_ids.ids)]
+        }
 
-            return action
     def revert_changes(self):
+        """
+        This method revert (delete) the all product which is in current record
+        and created using bulk_upload_book model.
+        """
         print(self.product_ids.ids)
         self.product_ids.unlink()
 
     @api.depends('author_id')
     def _compute_created_book_count(self):
+        """
+        This compute method return the len of created book in current record.
+        """
         for book in self:
             book.created_book_count = len(book.product_ids) if book and book.product_ids else 0.0

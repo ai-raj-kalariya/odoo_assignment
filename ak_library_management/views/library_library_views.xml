@@ -60,7 +60,7 @@
         </field>
     </record>
 
-    <!--Activity -->
+    <!--Action-->
     <record id="library_library_actions" model="ir.actions.act_window">
         <field name="name">Libraries</field>
         <field name="res_model">library.library</field>

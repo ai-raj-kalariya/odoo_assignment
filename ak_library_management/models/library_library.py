@@ -20,7 +20,7 @@ class Library(models.Model):
     notes = fields.Text(
         string="Notes"
     )
-    # many to many field for create a book using library tab
+    # Many2many field for create a book using library tab
     product_ids = fields.Many2many(
         comodel_name="product.template",  # parent model
         string="Book",

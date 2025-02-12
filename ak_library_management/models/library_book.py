@@ -10,27 +10,36 @@ class LibraryBook(models.Model):
     _description = "Library book"
 
     name = fields.Char(
-        string="Book Title")
+        string="Book Title"
+    )
     author = fields.Char(
-        string="Author Name")
+        string="Author Name"
+    )
     isbn = fields.Char(
-        string="ISBN Number")
+        string="ISBN Number"
+    )
     publication_date = fields.Date(
-        string="Date of Publication")
+        string="Date of Publication"
+    )
     # Show state book available or borrowed
     state = fields.Selection([
         ('available', 'Available'),
         ('borrowed', 'Borrowed')
-    ], string="Book Availability")
+    ], string="Book Availability"
+    )
     category_id = fields.Many2one(
         comodel_name='library.book.category',
-        string="Category")
+        string="Category"
+    )
     description = fields.Text(
-        string="Book Summary")
+        string="Book Summary"
+    )
     # when we select category then automatically selected tags
     tag_ids = fields.Many2many(
         related="category_id.tag_ids",
-        string="Tags")
+        string="Tags"
+    )
     library_id = fields.Many2one(
         "library.library",
-        string="Library")
+        string="Library"
+    )
