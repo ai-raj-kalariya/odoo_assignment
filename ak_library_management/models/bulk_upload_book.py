@@ -10,6 +10,7 @@ class BulkUploadBook(models.TransientModel):
     """
     _name = "bulk.upload.book"
     _description = "Bulk upload book"
+    _rec_name = "book_names"
 
     book_names = fields.Text(
         string="Book Names"
@@ -38,9 +39,7 @@ class BulkUploadBook(models.TransientModel):
         Using split() method return separate book which is written in the book text field
         and if not exist already in product then create product,
         """
-        print("\n\nself ::::", self, "\n\n")
         for rec in self:
-            print("\n\nrec ::::", rec, "\n\n")
             if rec.book_names:
                 books = rec.book_names.split(",")
                 for book in books:
@@ -51,8 +50,6 @@ class BulkUploadBook(models.TransientModel):
                             'author_id': rec.author_id.id,
                         })
                         rec.product_ids = [(4, products.id)]
-                        print("\n\n products : ", products)
-            print("\n\n\n book : ", self)
         return self
 
     def action_created_book(self):
@@ -81,7 +78,6 @@ class BulkUploadBook(models.TransientModel):
         This method revert (delete) the all product which is in current record
         and created using bulk_upload_book model.
         """
-        print(self.product_ids.ids)
         self.product_ids.unlink()
 
     @api.depends('author_id')

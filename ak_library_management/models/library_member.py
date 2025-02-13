@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """This is library member model"""
 from odoo import _, api, models, fields
-from setuptools.dist import sequence
 
 
 class LibraryMember(models.Model):

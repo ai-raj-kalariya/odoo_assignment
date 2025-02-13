@@ -19,7 +19,7 @@
             <form string="bulk_book">
                 <header>
                     <div>
-                        <button name="create_book" string="Create Book" type="object"/>
+                        <button name="create_book" string="Create Products" type="object"/>
                     </div>
                     <div>
                         <button name="revert_changes" string="Revert Changes" type="object"
@@ -27,12 +27,13 @@
                     </div>
                 </header>
                 <sheet>
+                <!--Smart Button-->
                     <div class="oe_button_box" name="button_box">
                         <button name="action_created_book"
                                 type="object"
                                 class="oe_stat_button"
                                 icon="fa-pencil-square-o" invisible="not product_ids">
-                            <field name="created_book_count" widget="statinfo" string="Created Book"/>
+                            <field name="created_book_count" widget="statinfo" string="Products"/>
                         </button>
                     </div>
                     <group>
@@ -40,7 +41,6 @@
                         <field name="author_id" required="true"/>
                         <field name="category"/>
                         <field name="price"/>
-                        <field name="product_ids" widget="many2many_tags"/>
                     </group>
                 </sheet>
             </form>
