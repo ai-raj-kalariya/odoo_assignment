@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """This is product template model inherit from sale/product"""
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class ProductTemplate(models.Model):
@@ -43,3 +43,11 @@ class ProductTemplate(models.Model):
     def is_available(self):
         """This method is convert state into available state"""
         self.write({'state': 'available'})
+
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        """This method create a book sequence for product template"""
+        for val in vals_list:
+            val['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
+            return super().create(val)

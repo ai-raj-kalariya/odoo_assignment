@@ -12,6 +12,8 @@ Smart Button
 # return action
 
 
+#Inherit base method
+
  # @api.model_create_multi
     # def create(self, vals_list):
     #     res = super(BulkUploadBook, self).create(vals_list)
@@ -28,3 +30,24 @@ Smart Button
     #                 print("\n\n products : ", products)
     #     print("\n\n\n book : ", res)
     #     return res
+
+
+
+
+# For creating multiple sequence in one model
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for val in vals_list:
+            seq_library_member_1 = self.env['ir.sequence'].browse(
+                self.env.ref(
+                    'ak_library_management.seq_library_member_1'
+                ).id).next_by_id() or _("New")
+            val['membership_no'] = seq_library_member_1
+
+            seq_library_member_2 = self.env['ir.sequence'].browse(
+                self.env.ref(
+                    'ak_library_management.seq_library_member_2'
+                ).id).next_by_id() or _("New")
+            val['member_id'] = seq_library_member_2
+        return super().create(val)

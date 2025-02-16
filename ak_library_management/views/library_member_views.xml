@@ -24,9 +24,10 @@
                         <group>
                             <field name="name"/>
                             <field name="email"/>
+                            <field name="phone"/>
                         </group>
                         <group>
-                            <field name="phone"/>
+                            <field name="membership_no"/>
                             <field name="membership_date"/>
                         </group>
                     </group>
