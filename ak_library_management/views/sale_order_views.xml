@@ -12,7 +12,7 @@
                     <button name="approve_order" string="Approve" type="object"/>
                 </div>
                 <div>
-                    <button name="reject_order" string="Reject" type="object"/>
+                    <button name="action_cancel" string="Reject" type="object"/>
                 </div>
             </header>
         </field>

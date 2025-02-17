@@ -12,18 +12,17 @@ class SaleOrder(models.Model):
     _inherit='sale.order'
 
     def action_confirm(self):
-        print("\n\n:::::quantity:::::",self.order_line)
-        # for product in self.order_line:
-        #     print(product.)
-        # # if not self.product_uom_qyt >= 5:
-        #     raise ValidationError(_("Approval needed! The following books have low stock: (list of products with quantity less than 5)"))
+        for product in self.order_line:
+            if not product.product_uom_qty >= 5:
+                raise ValidationError(_("Approval needed! The following books have low stock: (list of products with quantity less than 5)"))
         res=super(SaleOrder,self).action_confirm
-        print("\n\n:::::2\n\n")
         return res
 
     def approve_order(self):
         print("\n\n::::::approve",self)
 
-    def reject_order(self):
+    def action_cancel(self):
         print("\n\n::::::reject",self)
+        # res=super(SaleOrder,self).action_cancel
+        # return res
 
