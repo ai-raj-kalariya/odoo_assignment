@@ -7,8 +7,6 @@
             <field name="prefix">MEM-%(year)s-%(month)s-</field>
             <field name="padding">4</field>
         </record>
-    </data>
-    <data>
         <record id="seq_library_book" model="ir.sequence">
             <field name="name">Library Book</field>
             <field name="code">product.template</field>

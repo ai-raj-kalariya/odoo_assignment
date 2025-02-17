@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form_view_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <header>
+                <!--When we click on this button then state convert into available-->
+                <div>
+                    <button name="approve_order" string="Approve" type="object"/>
+                </div>
+                <div>
+                    <button name="reject_order" string="Reject" type="object"/>
+                </div>
+            </header>
+        </field>
+    </record>
+</odoo>
