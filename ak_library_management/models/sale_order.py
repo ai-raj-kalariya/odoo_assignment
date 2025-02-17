@@ -2,7 +2,7 @@
 """This is sale order model inherit from sale"""
 
 from odoo import _, api, models, fields
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 class SaleOrder(models.Model):
     """
@@ -14,15 +14,18 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         for product in self.order_line:
             if not product.product_uom_qty >= 5:
-                raise ValidationError(_("Approval needed! The following books have low stock: (list of products with quantity less than 5)"))
+                raise ValidationError(_("Approval needed! The following books have low stock:"))
         res=super(SaleOrder,self).action_confirm
         return res
 
     def approve_order(self):
-        print("\n\n::::::approve",self)
+        if not self.env.user.is_manager:
+            raise UserError(_('Only managers can approve orders.'))
+        res=super(SaleOrder,self).action_confirm
+        return res
 
-    def action_cancel(self):
-        print("\n\n::::::reject",self)
-        # res=super(SaleOrder,self).action_cancel
-        # return res
+    def reject_order(self):
+        if not self.env.user.is_manager:
+            raise UserError(_('Only managers can reject orders.'))
+        self.action_cancel()
 

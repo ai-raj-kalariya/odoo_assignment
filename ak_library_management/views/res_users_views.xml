@@ -17,11 +17,12 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
-            <form>
+            <div>
                 <xpath expr="//field[@name='login']" position="after">
+                    <label for="is_manager" string="Is Manager"/>
                     <field name="is_manager"/>
                 </xpath>
-            </form>
+            </div>
         </field>
     </record>
 </odoo>
