@@ -7,7 +7,9 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <header>
-                <!--When we click on this button then state convert into available-->
+<!--                <xpath expr="//button[@name='action_confirm']" position="attributes">-->
+<!--                    <attribute name="invisible">state != 'sent' or low_quantity_product</attribute>-->
+<!--                </xpath>-->
                 <div>
                     <button name="approve_order" string="Approve" type="object"/>
                 </div>

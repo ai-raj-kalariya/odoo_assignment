@@ -71,6 +71,14 @@
             sequence="60"
             action="bulk_upload_book_action"/>
 
+    <menuitem
+            id="borrow_transaction_history_menu"
+            name="History"
+            parent="ak_library_management_menu"
+            sequence="70"
+            action="borrow_transaction_history_action"/>
+
+
     <!--Inherit menuitems from sale-->
     <menuitem id="sale.menu_products"
             name="Product Items"

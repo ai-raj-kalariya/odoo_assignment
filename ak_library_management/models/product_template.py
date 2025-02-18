@@ -36,6 +36,10 @@ class ProductTemplate(models.Model):
         ('reserved', 'Reserved'),
     ], string="Book Availability")
 
+    borrow_transaction_history_book= fields.Many2one(
+        'borrow.transaction.history'
+    )
+
     def is_borrowed(self):
         """This method is convert state into borrowed state"""
         self.write({'state': 'borrowed'})

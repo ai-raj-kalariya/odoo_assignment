@@ -13,7 +13,8 @@ class BulkUploadBook(models.TransientModel):
     _rec_name = "book_names"
 
     book_names = fields.Text(
-        string="Book Names"
+        string="Book Names",
+        required=True
     )
     author_id = fields.Many2one(
         comodel_name='res.partner',

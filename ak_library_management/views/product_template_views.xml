@@ -25,7 +25,7 @@
                 </div>
                 <!--When we click on this button then state convert into borrowed-->
                  <div>
-                <button name="is_borrowed" string="Mark as Borrowed" type="object"
+                <button name="ak_library_management.borrow_transaction_history_action" string="Mark as Borrowed" type="action"
                 invisible="state == 'borrowed'"/>
                 </div>
                 <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
@@ -57,4 +57,5 @@
             </xpath>
         </field>
     </record>
+
 </odoo>
