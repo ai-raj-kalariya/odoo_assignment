@@ -7,18 +7,16 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
-                <attribute name="invisible">state != 'draft' or stat</attribute>
+                <attribute name="invisible">state != 'draft' or check_ok</attribute>
             </xpath>
-            <xpath expr="//button[@name='action_cancel']" position="attributes">
-                <attribute name="invisible">state not in ['draft', 'sent', 'sale'] or not id or locked or "stat = True"
-                </attribute>
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button name="approve_order" string="Approve" type="object"
+                        invisible="state not in ['draft', 'sent'] or not id or locked"/>
             </xpath>
-<!--            <xpath expr="//button[@name='action_cancel']" position="after">-->
-<!--                <button name="approve_order" string="Approve" type="object" invisible="state in ['sent', 'sale']"/>-->
-<!--            </xpath>-->
-<!--            <xpath expr="//button[@name='action_cancel']" position="after">-->
-<!--                <button name="reject_order" string="Reject" type="object" invisible="state in ['sent', 'sale']"/>-->
-<!--            </xpath>-->
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button name="reject_order" string="Reject" type="object"
+                        invisible="state not in ['draft', 'sent', 'sale'] or not id or locked"/>
+            </xpath>
         </field>
     </record>
 </odoo>

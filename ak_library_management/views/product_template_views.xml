@@ -26,7 +26,7 @@
                 <!--When we click on this button then state convert into borrowed-->
                  <div>
                 <button name="ak_library_management.borrow_transaction_history_action" string="Mark as Borrowed" type="action"
-                invisible="state == 'borrowed'"/>
+                invisible="state == 'borrowed'" confirm="Are you want to show wizard"/>
                 </div>
                 <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
             </header>
