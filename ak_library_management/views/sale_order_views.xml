@@ -6,17 +6,19 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <header>
-<!--                <xpath expr="//button[@name='action_confirm']" position="attributes">-->
-<!--                    <attribute name="invisible">state != 'sent' or low_quantity_product</attribute>-->
-<!--                </xpath>-->
-                <div>
-                    <button name="approve_order" string="Approve" type="object"/>
-                </div>
-                <div>
-                    <button name="action_cancel" string="Reject" type="object"/>
-                </div>
-            </header>
+            <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="invisible">state != 'draft' or stat</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="invisible">state not in ['draft', 'sent', 'sale'] or not id or locked or "stat = True"
+                </attribute>
+            </xpath>
+<!--            <xpath expr="//button[@name='action_cancel']" position="after">-->
+<!--                <button name="approve_order" string="Approve" type="object" invisible="state in ['sent', 'sale']"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//button[@name='action_cancel']" position="after">-->
+<!--                <button name="reject_order" string="Reject" type="object" invisible="state in ['sent', 'sale']"/>-->
+<!--            </xpath>-->
         </field>
     </record>
 </odoo>

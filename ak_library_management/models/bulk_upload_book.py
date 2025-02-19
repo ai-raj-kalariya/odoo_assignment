@@ -40,17 +40,12 @@ class BulkUploadBook(models.TransientModel):
         Using split() method return separate book which is written in the book text field
         and if not exist already in product then create product,
         """
-        for rec in self:
-            if rec.book_names:
-                books = rec.book_names.split(",")
-                for book in books:
-                    result = rec.env['product.template'].search([('name', '=', book)])
-                    if not result:
-                        products = rec.env['product.template'].create({
-                            'name': book,
-                            'author_id': rec.author_id.id,
-                        })
-                        rec.product_ids = [(4, products.id)]
+        for book in self.book_names.split(","):
+            if not self.env['product.template'].search([('name', '=', book)]):
+                products = self.env['product.template'].create({
+                    'name': book,
+                    'author_id': self.author_id.id,})
+                self.product_ids = [(4, products.id)]
         return self
 
     def action_created_book(self):
@@ -58,21 +53,17 @@ class BulkUploadBook(models.TransientModel):
         This method is used to open list views and form view when click on smart button.
         If only one product created then redirect on form view else show list view and form view.
         """
-        if len(self.product_ids) == 1:
-            book_id = self.env['product.template'].search([('name', '=', self.product_ids.name)])
-            return {
-                'type': 'ir.actions.act_window',
-                'view_mode': 'form',
-                'res_model': 'product.template',
-                'res_id': book_id.id,
-            }
-        return {
+        action = {
             'name': 'Created Books',
             'type': 'ir.actions.act_window',
             'view_mode': 'list,form',
             'res_model': 'product.template',
             'domain': [('id', 'in', self.product_ids.ids)]
         }
+        if len(self.product_ids) == 1:
+            book_id = self.env['product.template'].search([('name', '=', self.product_ids.name)])
+            action.update({'view_mode': 'form', 'res_id': book_id.id})
+        return action
 
     def revert_changes(self):
         """
