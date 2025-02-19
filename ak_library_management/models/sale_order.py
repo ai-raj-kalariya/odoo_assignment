@@ -15,24 +15,36 @@ class SaleOrder(models.Model):
     check_ok = fields.Boolean(
         default=False
     )
-    is_approve = fields.Boolean()
+    is_approve = fields.Boolean(
+        default=False
+    )
 
     def action_confirm(self):
         """
-        This method is check if product quantity is less than 5 then return validation 
-        error and if more than 5 then proceed base method.
+        Override action_confirm to check product quantity.
+        If any product has less than 5 quantity, open the warning wizard instead of confirming the order.
         """
         if self.is_approve:
-            return super().action_confirm()
+            return super(SaleOrder, self).action_confirm()
 
-        low_quantity_product = self.order_line.filtered(lambda line: line.product_uom_qty < 5)
+        low_quantity_product = self.order_line.filtered(lambda line: line.product_template_id.qty_available < 5)
         if low_quantity_product:
-            self.check_ok = True
-            product_list = "\n".join([line.product_id.display_name for line in low_quantity_product])
-            raise UserError(_(f"Approval needed! The following books have low stock:\n{product_list}"))
-        res = super().action_confirm()
-        print("\n\n\n",self.check_ok)
-        return res
+            product_list = "\n".join([line.product_template_id.name for line in low_quantity_product])
+            message = _(f"Approval needed! The following books have low stock:\n{product_list}")
+
+            return {
+                'type': 'ir.actions.act_window',
+                'name': "Sale Order Warning",
+                'res_model': 'sale.order.warning.wizard',
+                'view_mode': 'form',
+                'view_id': self.env.ref('ak_library_management.sale_order_warning_wizard_view').id,
+                'target': 'new',
+                'context': {
+                    'default_message': message,
+                    'default_sale_order_id': self.id,
+                }
+            }
+        return super(SaleOrder, self).action_confirm()
 
     def approve_order(self):
         """

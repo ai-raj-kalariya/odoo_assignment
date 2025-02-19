@@ -20,7 +20,8 @@
         "views/sale_order_views.xml",
         "views/borrow_transaction_history_views.xml",
         "views/library_menu_views.xml",
-        "data/ir_sequence_data.xml"
+        "data/ir_sequence_data.xml",
+        "wizard/sale_order_views.wizard.xml"
     ],
     "installable": True,
     "auto_install": False,
