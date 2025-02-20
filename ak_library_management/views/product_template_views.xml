@@ -24,10 +24,14 @@
                             invisible="state == 'available'"/>
                 </div>
                 <!--When we click on this button then state convert into borrowed-->
+                 <div>
+                    <button name="check_book_availability" string="Mark as Borrowed"
+                            type="object"/>
+                </div>
                 <div>
-                    <button name="is_borrowed" string="Mark as Borrowed"
+                    <button name="is_borrowed" string="Borrow Books"
                             type="object"
-                            invisible="state == 'borrowed'" confirm="Are you want to show wizard"/>
+                            invisible="state == 'borrowed'"/>
                 </div>
                 <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
             </header>

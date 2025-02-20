@@ -53,3 +53,7 @@ class Library(models.Model):
             'domain': [('state', '=', 'borrowed'), ('id', 'in', self.product_ids.ids)],
         }
         return action
+
+    # sql constrains for unique library nam
+    _sql_constraints = [('name_uniq', "unique(name)", "Library name already exists.")]
+
