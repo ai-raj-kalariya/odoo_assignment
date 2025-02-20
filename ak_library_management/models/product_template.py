@@ -54,4 +54,4 @@ class ProductTemplate(models.Model):
         """This method create a book sequence for product template"""
         for val in vals_list:
             val['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
-            return super().create(val)
+        return super().create(vals_list)

@@ -31,4 +31,4 @@ class LibraryMember(models.Model):
         """This method create a member sequence for library member"""
         for val in vals_list:
             val['membership_no'] = self.env['ir.sequence'].next_by_code('library.member') or _('New')
-            return super().create(val)
+        return super().create(vals_list)

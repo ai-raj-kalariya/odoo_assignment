@@ -21,6 +21,7 @@
                 <field name="not_trust_worthy"/>
                 <field name="is_member"/>
             </xpath>
+<!--            <field name="n"/>-->
         </field>
     </record>
 </odoo>
