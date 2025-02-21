@@ -29,13 +29,9 @@
                         <group>
                             <field name="borrow_start_date"/>
                             <field name="borrow_end_date"/>
+                            <field name="books" widget="many2many_tags"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Product" name="product">
-                            <field name="books"/>
-                        </page>
-                    </notebook>
                 </sheet>
             </form>
         </field>

@@ -9,6 +9,7 @@
                 <field name="name"/>
                 <field name="location"/>
                 <field name="capacity"/>
+                <field name="librarian"/>
             </list>
         </field>
     </record>
@@ -32,6 +33,7 @@
                         <group>
                             <field name="name"/>
                             <field name="location"/>
+                            <field name="librarian"/>
                         </group>
                         <group>
                             <field name="capacity"/>
@@ -56,6 +58,7 @@
                         </page>
                     </notebook>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>

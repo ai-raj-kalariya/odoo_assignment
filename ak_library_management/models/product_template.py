@@ -2,6 +2,7 @@
 """This is product template model inherit from sale/product"""
 from odoo import _, api, models, fields
 from odoo.exceptions import ValidationError
+from datetime import date
 
 
 class ProductTemplate(models.Model):
@@ -33,13 +34,11 @@ class ProductTemplate(models.Model):
     )
     state = fields.Selection([
         ('available', 'Available'),
+        ('unavailable', 'Unavailable'),
         ('borrowed', 'Borrowed'),
-        ('reserved', 'Reserved'),
-    ], string="Book Availability")
-
-    borrow_transaction_history_book= fields.Many2one(
-        'borrow.transaction.history'
-    )
+        ('returned', 'Returned'),
+    ], string="Book Availability",
+        tracking=True)
 
     def is_available(self):
         """This method is convert state into available state"""
@@ -52,30 +51,47 @@ class ProductTemplate(models.Model):
             val['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
         return super().create(vals_list)
 
-
     def is_borrowed(self):
-        print("\n\n\n>>>>>>>",self.env.ref('ak_library_management.borrow_transaction_history_action').id)
+        print("\n\n\n>>>>>>>", self.env.ref('ak_library_management.borrow_transaction_history_action').id)
         """This method is convert state into borrowed state"""
-        message = _(f"Borrowed book is ")
+        message = "Customer is not trustworthy. Are you sure you want to continue?"
         return {
             'type': 'ir.actions.act_window',
             'name': "'Borrowed book wizard'",
-            'res_model': 'borrow.transaction.history',
+            'res_model': 'borrow.transaction.history.wizard',
             'view_mode': 'form',
-            'view_id': self.env.ref('ak_library_management.borrow_transaction_history_action').id,
             'target': 'new',
-            # 'context': {
-            #     'default_message': message,
-            #     'default_res_partner_id': self.id,
-            # }
         }
 
     # Python constrains
     @api.constrains('available')
     def check_book_availability(self):
-        if not self.available == True:
-            print("\n\n\n>>>>>>>in",self.available)
+        if self.state in ['borrowed', 'unavailable']:
             raise ValidationError("Book is not available %s" % self.author_id.name)
-        print("\n\n\n>>>>>>>out", self.available)
-        return self.write({'state': 'borrowed'})
+        self.write({'state': 'borrowed'})
+        self.message_post(body=f'{self.author_id.name} is borrowed. Date of borrowed: {date.today()}')
+        #
+        # def create_activity(self):
+        activty_type = self.env['mail.activity.type'].create({
+            'name': 'To-Do',
+        })
+        activity = self.env['mail.activity'].create({
+            'summary': 'Discuss about some topic',
+            'activity_type_id': activty_type.id,
+            'note': 'Discuss',
+            'res_model_id': self.env['ir.model']._get_id('product.template'),
+            'res_id': self.id
+        })
+        # return activity
 
+    # @api.depends('activity_type_id')
+    # def _compute_date_deadline(self):
+    #     for scheduler in self:
+    #         if scheduler.activity_type_id:
+    #             scheduler.date_deadline = scheduler.activity_type_id._get_date_deadline()
+    #         elif not scheduler.date_deadline:
+    #             scheduler.date_deadline = fields.Date.context_today(scheduler)
+
+    def is_returned(self):
+        self.write({'state': 'returned'})
+        self.message_post(body=f'{self.author_id.name} is return book. Date of return: {date.today()}')

@@ -28,6 +28,11 @@
                     <button name="check_book_availability" string="Mark as Borrowed"
                             type="object"/>
                 </div>
+                 <div>
+                    <button name="is_returned" string="Return Book"
+                            type="object"
+                            invisible="state == 'available'"/>
+                </div>
                 <div>
                     <button name="is_borrowed" string="Borrow Books"
                             type="object"

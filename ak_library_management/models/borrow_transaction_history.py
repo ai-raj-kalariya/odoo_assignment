@@ -14,8 +14,7 @@ class BorrowTransactionHistory(models.Model):
     )
     books = fields.Many2many(
         'product.template',
-        'borrow_transaction_history_book',
-        string="Books"
+        string="Books",
     )
     borrow_start_date = fields.Datetime(
         string="Borrow start Date",

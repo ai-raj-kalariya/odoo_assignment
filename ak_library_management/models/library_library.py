@@ -5,6 +5,7 @@ from odoo import api, models, fields
 
 class Library(models.Model):
     """For create a library and also create a book using tab"""
+    _inherit = ['mail.thread']
     _name = "library.library"
     _description = "library"
 
@@ -13,12 +14,18 @@ class Library(models.Model):
     )
     location = fields.Char(
         string="Location",
+        tracking=True
     )
     capacity = fields.Integer(
-        string="Capacity"
+        string="Capacity",
+        tracking=True
     )
     notes = fields.Text(
         string="Notes"
+    )
+    librarian = fields.Many2one(
+        'res.users',
+        string="Librarian"
     )
     # Many2many field for create a book using library tab
     product_ids = fields.Many2many(
@@ -56,4 +63,3 @@ class Library(models.Model):
 
     # sql constrains for unique library nam
     _sql_constraints = [('name_uniq', "unique(name)", "Library name already exists.")]
-
