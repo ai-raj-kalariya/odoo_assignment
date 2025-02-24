@@ -24,19 +24,20 @@
                             invisible="state == 'available'"/>
                 </div>
                 <!--When we click on this button then state convert into borrowed-->
-                 <div>
+                <div>
                     <button name="check_book_availability" string="Mark as Borrowed"
                             type="object"/>
                 </div>
-                 <div>
+                <!--When we click on this button then state convert into returned-->
+                <div>
                     <button name="is_returned" string="Return Book"
                             type="object"
                             invisible="state == 'available'"/>
                 </div>
+                <!--When we click on this button open wizard for borrow transaction history model.-->
                 <div>
-                    <button name="is_borrowed" string="Borrow Books"
-                            type="object"
-                            invisible="state == 'borrowed'"/>
+                    <button name="borrow_books" string="Borrow Books"
+                            type="object"/>
                 </div>
                 <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
             </header>

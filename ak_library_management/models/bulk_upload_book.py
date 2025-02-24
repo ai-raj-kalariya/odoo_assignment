@@ -46,6 +46,13 @@ class BulkUploadBook(models.TransientModel):
                     'name': book,
                     'author_id': self.author_id.id,})
                 self.product_ids = [(4, products.id)]
+
+                # showing notification when book is created
+                self.env['bus.bus']._sendone(
+                    self.env.user.partner_id, 'simple_notification', {
+                    'type': 'success',
+                    'message': f"{products.name} is created.",
+                    })
         return self
 
     def action_created_book(self):

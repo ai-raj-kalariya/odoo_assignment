@@ -11,6 +11,7 @@ class Library(models.Model):
 
     name = fields.Char(
         string="Name",
+        tracking=True
     )
     location = fields.Char(
         string="Location",
@@ -18,14 +19,14 @@ class Library(models.Model):
     )
     capacity = fields.Integer(
         string="Capacity",
-        tracking=True
     )
     notes = fields.Text(
         string="Notes"
     )
     librarian = fields.Many2one(
         'res.users',
-        string="Librarian"
+        string="Librarian",
+        tracking = True
     )
     # Many2many field for create a book using library tab
     product_ids = fields.Many2many(

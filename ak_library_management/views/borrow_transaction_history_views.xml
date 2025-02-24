@@ -29,9 +29,13 @@
                         <group>
                             <field name="borrow_start_date"/>
                             <field name="borrow_end_date"/>
-                            <field name="books" widget="many2many_tags"/>
+                            <field name="books_ids" widget="many2many_tags"/>
                         </group>
                     </group>
+                    <footer>
+                        <button string="Conform" name="action_confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" name="action_cancel" type="object" class="btn-primary"/>
+                    </footer>
                 </sheet>
             </form>
         </field>
