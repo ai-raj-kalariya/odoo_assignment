@@ -9,7 +9,7 @@
                 <field name="name"/>
                 <field name="location"/>
                 <field name="capacity"/>
-                <field name="librarian"/>
+                <field name="librarian_id"/>
             </list>
         </field>
     </record>
@@ -20,7 +20,7 @@
         <field name="arch" type="xml">
             <form string="Library">
                 <sheet>
-                <!-- smart button for show count of borrowed book -->
+                    <!-- smart button for show count of borrowed book -->
                     <div class="oe_button_box" name="button_box">
                         <button name="action_borrowed_book"
                                 type="object"
@@ -33,7 +33,7 @@
                         <group>
                             <field name="name"/>
                             <field name="location"/>
-                            <field name="librarian"/>
+                            <field name="librarian_id"/>
                         </group>
                         <group>
                             <field name="capacity"/>
@@ -44,7 +44,7 @@
                     <notebook>
                         <page string="Product" name="product">
                             <field name="product_ids">
-                                <list editable="bottom" create="0" edit="0">
+                                <list editable="bottom">
                                     <field name="name"/>
                                     <field name="author_id"/>
                                     <field name="publisher"/>

@@ -9,7 +9,7 @@
                 <field name="message"/>
                 <footer>
                     <button special="save" string="Continue" class="btn-primary"  />
-                    <button string="Cancel" special="cancel" class="btn-primary" />
+                    <button name="action_cancel" string="Cancel" type="object" class="btn-primary" />
                 </footer>
             </form>
         </field>

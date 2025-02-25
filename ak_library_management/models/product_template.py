@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """This is product template model inherit from sale/product"""
+from datetime import date, timedelta
 from odoo import _, api, models, fields
 from odoo.exceptions import ValidationError
-from datetime import date, timedelta
 
 
 class ProductTemplate(models.Model):
@@ -55,36 +55,63 @@ class ProductTemplate(models.Model):
         return super().create(vals_list)
 
     def _compute_display_name(self):
+        """
+          override compute display name and change book name format to
+          [author_name]book_name.
+          param: none
+        """
         for rec in self:
-            if self._context.get('add_author') and rec.author:
-                rec.display_name = '[' + rec.author + ']' + rec.name
+            if self._context.get('add_author') and rec.author_id:
+                rec.display_name = '[' + rec.author_id.name + ']' + rec.name
             else:
                 rec.display_name = rec.name
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=None):
+        """
+        override name_search method to search book by author name.
+        param: name, args, operator, limit
+        """
+        args = list(args or [])
+        if name:
+            args += [('author_id', operator, name)]
+        return super().name_search(args=args, limit=limit)
 
     # Python constrains
     @api.constrains('available')
     def check_book_availability(self):
+        """
+        In this method check if book is not borrowed then create activity and log else
+        if state in borrowed then show the
+        :return:
+        """
         if self.state in ['borrowed', 'unavailable']:
-            raise ValidationError("Book is not available %s" % self.author_id.name)
+            raise ValidationError("Book is not available.")
         self.write({'state': 'borrowed'})
-        self.message_post(body=f'{self.author_id.name} is borrowed. Date of borrowed: {date.today()}')
+        self.message_post(body=f'{self.env.user.name} is borrowed book. Date: {date.today()}')
 
         # for activity...
         due_date = date.today() + timedelta(days=10)
         self.activity_schedule(
             act_type_xmlid='mail.mail_activity_data_todo',
             summary="Book Return Reminder",
-            note=_(f"The book '{self.name}' borrowed by {self.author_id.name} should be returned by {due_date}."),
+            note=_(f"'{self.name}' borrowed by {self.env.user.name} should be return {due_date}."),
             user_id=self.env.user.id,
             date_deadline=due_date
         )
-        self.message_post(body=f"{self.author_id.name} borrowed '{self.name}'. Due date: {due_date}")
+        self.message_post(body=f"{self.env.user.name} borrowed '{self.name}'. Due date: {due_date}")
 
     def is_returned(self):
+        """
+        Using this method can change the state into returned.
+        """
         self.write({'state': 'returned'})
-        self.message_post(body=f'{self.author_id.name} is return book. Date of return: {date.today()}')
+        self.message_post(body=f'{self.env.user.name} is return book. Date: {date.today()}')
 
     def borrow_books(self):
+        """
+        This method use for open book_transaction_history wizard.
+        """
         return {
             'type': 'ir.actions.act_window',
             'name': "'Borrowed book'",
@@ -92,3 +119,14 @@ class ProductTemplate(models.Model):
             'view_mode': 'form',
             'target': 'new',
         }
+
+    @api.constrains('state')
+    def _check_return_book(self):
+        """
+        This method when we change state of book then showing notification.
+        param: none
+        """
+        self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', {
+            'type': 'warning',
+            'message': f"{self.name} book state is changed to {self.state}",
+        })

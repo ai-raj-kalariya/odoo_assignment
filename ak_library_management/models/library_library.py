@@ -23,7 +23,7 @@ class Library(models.Model):
     notes = fields.Text(
         string="Notes"
     )
-    librarian = fields.Many2one(
+    librarian_id = fields.Many2one(
         'res.users',
         string="Librarian",
         tracking = True
@@ -39,6 +39,15 @@ class Library(models.Model):
         string="Borrowed Books"
     )
 
+    @api.constrains('product_ids.state')
+    def _check_book_ids(self):
+        """
+        send notification to librarian if books is add or delete in many2many field.
+        """
+        self.env['bus.bus']._sendone(self.librarian_id.partner_id, 'simple_notification', {
+            'type': 'success',
+            'message': f"In library[{self.name}] books list are updated.",
+        })
     @api.depends('product_ids')
     def _compute_borrowed_book_count(self):
         """

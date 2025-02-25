@@ -1,80 +1,105 @@
 # -*- coding: utf-8 -*-
 
-from odoo import _,models, fields, api
+from datetime import datetime
+from odoo import api, models, fields
 from odoo.exceptions import ValidationError
-from datetime import  datetime
 
 
 class BorrowTransactionHistory(models.Model):
+    """
+    Using this class create transaction for borrowed book. And else create wizard for
+    product.template model.
+    """
     _name = 'borrow.transaction.history'
-    _rec_name='customer_id'
+    _rec_name = 'customer_id'
 
     customer_id = fields.Many2one(
         comodel_name='res.partner',
-        string="Customer_id"
+        string="Customer_id",
+        required=True
     )
     books_ids = fields.Many2many(
         'product.template',
         string="Books",
     )
-    borrow_start_date = fields.Datetime(
+    borrow_start_date = fields.Date(
         string="Borrow start Date",
         default=datetime.today(),
         readonly=True
     )
-    borrow_end_date = fields.Datetime(
-        string="Borrow End Date"
+    borrow_end_date = fields.Date(
+        string="Borrow End Date",
+        required=True
     )
     deposit_amount = fields.Float(
-        string="Deposit Amount"
+        string="Deposit Amount",
+        required = True
+    )
+    is_member = fields.Boolean(
+        related='customer_id.is_member'
     )
 
     @api.constrains('borrow_start_date', 'borrow_end_date')
     def _check_end_date(self):
+        """
+        This method check the end date is not greater to start date.
+        :return : if true then validationError
+        """
         if self.borrow_end_date < self.borrow_start_date:
             raise ValidationError("Borrow end date should be higher than start date.")
 
-    def get_wizard(self,name,message):
+    def get_warning_wizard(self, name, message):
+        """
+        This method is popup wizard for entering data and dynamically show based on condition.
+        :param name:
+        :param message:
+        :return: wizard for different condition
+        """
         return {
-                'type': 'ir.actions.act_window',
-                'name': name,
-                'res_model': 'borrow.transaction.history.wizard',
-                'view_mode': 'form',
-                'target': 'new',
-                'context': {
-                    'default_message': message,
-                }
+            'type': 'ir.actions.act_window',
+            'name': name,
+            'res_model': 'borrow.transaction.history.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_message': message,
+            }
         }
 
     def action_confirm(self):
         """
-
+        This method create a book in book_transaction_history model, check the bellow condition and
+        If conform then created book.
         """
-        print("\n\n\n>>>>>>>>>>..",low_quantity_product)
         if self.customer_id.not_trust_worthy:
-            return self.get_wizard(
+            return self.get_warning_wizard(
                 name='Borrowed book',
-                message ="Customer is not trustworthy. Are you sure you want to continue?")
+                message="Customer is not trustworthy. Are you sure you want to continue?")
 
-        # low_quantity_product=[book.name for book in self.books_ids]
-        # 
-        # if low_quantity_product:
-        #     product_list = "\n".join([line.product_template_id.name for line in low_quantity_product])
-        #     return self.get_wizard(
-        #         name='Law quantity book',
-        #         message=_(f"Approval needed! The following books have low stock:\n{product_list}")
-        #     )
-        else:
-            books = self.env['borrow.transaction.history'].create({
-                'customer_id': self.customer_id.id,
-                'books': self.books.ids,
-                'borrow_start_date': self.borrow_start_date,
-                'borrow_end_date': self.borrow_end_date,
-                'deposit_amount': self.deposit_amount,
-            })
-            return books
+        low_quantity_product = [rec.name for rec in self.books_ids if rec.qty_available == 0]
+        if low_quantity_product:
+            name = 'Low quantity wizard'
+            message = (f"The following books are out of stock: {low_quantity_product}."
+                       " Are you want to continue?")
+            return self.get_warning_wizard(name, message)
 
+        if len(self.books_ids) > 5:
+            search_record = self.search([('customer_id.name', "=", self.customer_id.name)])
+            books = []
+            [books.append(book.name) for rec in search_record[:-1]
+             for book in rec.books_ids if book.name not in books]
 
-    def action_cancel(self):
-        """ Closes the wizard without performing any action."""
-        return {'type': 'ir.actions.act_window_close'}
+            if books:
+                name = "Warning Wizard"
+                message = (f"Customer already has [{self.customer_id.name}]"
+                           f" open borrow transactions with {books} books."
+                            " Are you want to borrow more books?")
+                return self.get_warning_wizard(name, message)
+
+            return self.get_warning_wizard(
+                "Warning Wizard",
+                "Are you want to allow borrowing more than 5 books for this customer?")
+
+        for rec in self.books_ids:
+            if rec.qty_available:
+                rec.qty_available -= 1
