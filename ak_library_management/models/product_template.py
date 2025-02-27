@@ -47,6 +47,10 @@ class ProductTemplate(models.Model):
         """This method is convert state into available state"""
         self.write({'state': 'available'})
 
+    def is_borrowed(self):
+        """This method is convert state into borrowed state"""
+        self.with_context(state=self.state).write({'state': 'borrowed'})
+
     @api.model_create_multi
     def create(self, vals_list):
         """This method create a book sequence for product template"""
@@ -78,28 +82,34 @@ class ProductTemplate(models.Model):
         return super().name_search(args=args, limit=limit)
 
     # Python constrains
-    @api.constrains('available')
-    def check_book_availability(self):
+    @api.constrains('state')
+    def _check_state(self):
         """
         In this method check if book is not borrowed then create activity and log else
         if state in borrowed then show the
         :return:
         """
-        if self.state in ['borrowed', 'unavailable']:
+        if self._context.get('state', False) in ['borrowed', 'unavailable']:
             raise ValidationError("Book is not available.")
-        self.write({'state': 'borrowed'})
-        self.message_post(body=f'{self.env.user.name} is borrowed book. Date: {date.today()}')
+        if self.state == 'borrowed':
+            self.message_post(body=f'{self.env.user.name} is borrowed book. Date: {date.today()}')
 
-        # for activity...
-        due_date = date.today() + timedelta(days=10)
-        self.activity_schedule(
-            act_type_xmlid='mail.mail_activity_data_todo',
-            summary="Book Return Reminder",
-            note=_(f"'{self.name}' borrowed by {self.env.user.name} should be return {due_date}."),
-            user_id=self.env.user.id,
-            date_deadline=due_date
-        )
-        self.message_post(body=f"{self.env.user.name} borrowed '{self.name}'. Due date: {due_date}")
+            # for activity...
+            due_date = date.today() + timedelta(days=10)
+            self.activity_schedule(
+                act_type_xmlid='mail.mail_activity_data_todo',
+                summary="Book Return Reminder",
+                note=_(f"'{self.name}' borrowed by {self.env.user.name} should be return {due_date}."),
+                user_id=self.env.user.id,
+                date_deadline=due_date
+            )
+            self.message_post(body=f"{self.env.user.name} borrowed '{self.name}'. Due date: {due_date}")
+
+        if self.state == 'returned':
+            self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', {
+                'type': 'warning',
+                'message': f"{self.name} book state is changed to {self.state}",
+            })
 
     def is_returned(self):
         """
@@ -119,14 +129,3 @@ class ProductTemplate(models.Model):
             'view_mode': 'form',
             'target': 'new',
         }
-
-    @api.constrains('state')
-    def _check_return_book(self):
-        """
-        This method when we change state of book then showing notification.
-        param: none
-        """
-        self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', {
-            'type': 'warning',
-            'message': f"{self.name} book state is changed to {self.state}",
-        })
