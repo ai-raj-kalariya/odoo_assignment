@@ -129,3 +129,8 @@ class ProductTemplate(models.Model):
             'view_mode': 'form',
             'target': 'new',
         }
+
+    def book_returned_reminder(self):
+        borrowed_book=self.env['product.template'].search([('state', '=', 'borrowed')])
+        for book in borrowed_book:
+            print("\n Book Name:",book.name)

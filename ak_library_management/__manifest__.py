@@ -21,6 +21,8 @@
         "views/borrow_transaction_history_views.xml",
         "views/library_menu_views.xml",
         "data/ir_sequence_data.xml",
+        "data/ir_cron_data.xml",
+        "data/ir_action_data.xml",
         "wizard/sale_order_views.wizard.xml",
         "wizard/borrow_transaction_history_wizard_views.xml"
     ],
