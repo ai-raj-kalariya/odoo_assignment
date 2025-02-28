@@ -18,9 +18,14 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <header>
+                <!--This button for the testing purpose-->
+                <div>
+                    <button name="is_available" string="Mark as Available" type="object"
+                            invisible="state == 'available'"/>
+                </div>
                 <!--When we click on this button then state convert into available-->
                 <div>
-                    <button name="book_returned_reminder" string="Mark as Available" type="object"
+                    <button name="is_available" string="Mark as Available" type="object"
                             invisible="state == 'available'"/>
                 </div>
                 <!--When we click on this button then state convert into borrowed-->
