@@ -1,37 +1,38 @@
 # -*- coding: utf-8 -*-
-"""This is sale order model inherit from sale"""
 
-from odoo import _, api, models, fields
+from odoo import api, models, fields
 from odoo.exceptions import ValidationError, UserError
 
 
 class SaleOrder(models.Model):
     """
-    This model is inherit sale.order model from sale module and add
-    new conditions in this sale order.
+    This model extends the 'sale.order' model to introduce additional approval
+    conditions for confirming sale orders based on product stock availability.
     """
     _inherit = 'sale.order'
 
     check_ok = fields.Boolean(
-        default=False
+        string="Check"
     )
-    is_approve = fields.Boolean(
-        default=False
+    is_manager_approve = fields.Boolean(
+        string="Is Manager Approve"
     )
 
     def action_confirm(self):
         """
-        Override action_confirm to check product quantity.
-        If any product has less than 5 quantity, open the warning wizard instead of confirming the order.
+        Overrides the default confirmation action. If any product in the order has
+        a stock quantity of less than 5, a warning wizard is triggered instead of
+        confirming the order. If a manager approves or no products have low stock,
+        the order proceeds as usual.
+        param: self
+        return: base conform method
         """
-        if self.is_approve:
-            return super(SaleOrder, self).action_confirm()
-
         low_quantity_product = self.order_line.filtered(lambda line: line.product_template_id.qty_available < 5)
-        if low_quantity_product:
+        if (self.is_manager_approve and self.env.user.is_manager) or not low_quantity_product:
+            return super().action_confirm()
+        else:
             product_list = "\n".join([line.product_template_id.name for line in low_quantity_product])
-            message = _(f"Approval needed! The following books have low stock:\n{product_list}")
-
+            message = f"Approval needed! The following books have low stock:\n{product_list}"
             return {
                 'type': 'ir.actions.act_window',
                 'name': "Sale Order Warning",
@@ -44,22 +45,24 @@ class SaleOrder(models.Model):
                     'default_sale_order_id': self.id,
                 }
             }
-        return super(SaleOrder, self).action_confirm()
 
     def approve_order(self):
         """
-        If is member than approve less than 5 product otherwise 
-        showing UserError
+        Approves the order if the user is a manager. If not, it raises a UserError. This method sets
+        `is_manager_approve` to True, allowing the order to be confirmed even if stock is low.
+        param: self
         """
         if not self.env.user.is_manager:
-            raise UserError(_('Only managers can approve orders.'))
-        self.check_ok = False
-        self.is_approve = True
+            raise UserError('Only managers can approve orders.')
+        self.write({'check_ok': False, 'is_manager_approve': True})
 
     def reject_order(self):
         """
-        This method is cancel the order.
+        Cancels the sale order if the user is a manager. If a non-manager attempts
+        to reject the order, a UserError is raised.
+        param: self
+        return: base cancel method
         """
         if not self.env.user.is_manager:
-            raise UserError(_('Only managers can reject orders.'))
-        return super().action_cancel()
+            raise UserError('Only managers can reject orders.')
+        self.action_cancel()

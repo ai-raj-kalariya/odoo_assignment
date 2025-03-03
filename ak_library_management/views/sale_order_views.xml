@@ -11,11 +11,11 @@
             </xpath>
             <xpath expr="//button[@name='action_cancel']" position="after">
                 <button name="approve_order" string="Approve" type="object"
-                        invisible="state not in ['draft', 'sent'] or not id or locked"/>
+                        invisible="state not in ['draft', 'sent'] or not id or locked or not check_ok"/>
             </xpath>
             <xpath expr="//button[@name='action_cancel']" position="after">
                 <button name="reject_order" string="Reject" type="object"
-                        invisible="state not in ['draft', 'sent', 'sale'] or not id or locked"/>
+                        invisible="state not in ['draft', 'sent', 'sale'] or not id or locked or not check_ok"/>
             </xpath>
         </field>
     </record>

@@ -102,4 +102,7 @@ class BorrowTransactionHistory(models.Model):
 
         for rec in self.books_ids:
             if rec.qty_available:
+                print("\n\n\nQuanttiy:::",rec.qty_available)
                 rec.qty_available -= 1
+                print("\n\n\n after Quanttiy:::",rec.qty_available)
+

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Library",
-    "version": "18.0.1.1.0",
+    "version": "18.0.1.2.0",
     "license": "Other proprietary",
     "depends": ["sale_management"],
     "author":"Raj",

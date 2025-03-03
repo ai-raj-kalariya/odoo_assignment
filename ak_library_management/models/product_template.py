@@ -130,10 +130,10 @@ class ProductTemplate(models.Model):
             'target': 'new',
         }
 
-    def book_returned_reminder(self):
-        borrowed_book=self.env['product.template'].search([('state', '=', 'borrowed')])
-        for activity_deadline in borrowed_book:
-            print("\n activity_deadline:",activity_deadline.activity_ids['date_deadline'])
-            alert_date= activity_deadline.activity_ids['date_deadline'] - timedelta(days = 2)
-            if date.today() == alert_date:
-                print("\n\ndate for returned:::::",date.today())
+    # def book_returned_reminder(self):
+    #     borrowed_book=self.env['product.template'].search([('state', '=', 'borrowed')])
+    #     for activity_deadline in borrowed_book:
+    #         print("\n activity_deadline:",activity_deadline.activity_ids['date_deadline'])
+    #         alert_date= activity_deadline.activity_ids['date_deadline'] - timedelta(days = 2)
+    #         if date.today() == alert_date:
+    #             print("\n\ndate for returned:::::",date.today())
