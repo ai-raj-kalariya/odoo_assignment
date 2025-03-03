@@ -35,6 +35,9 @@
                             <field name="phone"/>
                             <field name="membership_date"/>
                         </group>
+                        <group>
+                            <field name="html"/>
+                        </group>
                     </group>
                 </sheet>
             </form>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from odoo import api, models, fields
 from odoo.exceptions import ValidationError
 
@@ -102,7 +102,15 @@ class BorrowTransactionHistory(models.Model):
 
         for rec in self.books_ids:
             if rec.qty_available:
-                print("\n\n\nQuanttiy:::",rec.qty_available)
                 rec.qty_available -= 1
-                print("\n\n\n after Quanttiy:::",rec.qty_available)
 
+
+    def book_returned_reminder(self):
+        borrowed_book=self.env['product.template'].search([('state', '=', 'borrowed')])
+        for activity_deadline in borrowed_book:
+            print("\n activity_deadline:",activity_deadline.activity_ids['date_deadline'])
+            alert_date= activity_deadline.activity_ids['date_deadline'] - timedelta(days = 2)
+            if date.today() == alert_date:
+                print("\n\ndate for returned:::::",date.today())
+            if date.today() > alert_date:
+                print("\n\nbook name:::::",activity_deadline )

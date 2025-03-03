@@ -3,14 +3,13 @@
     <data noupdate="1">
         <record forcecreate="True" id="ir_cron_book_returned_reminder" model="ir.cron">
             <field name="name">Book Returned Reminder</field>
-            <field name="model_id" ref="model_product_template"/>
+            <field name="model_id" ref="model_borrow_transaction_history"/>
             <field name="state">code</field>
             <field name="code">model.book_returned_reminder()</field>
             <field name="active" eval="True"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="interval_type">minutes</field>
             <field name="interval_number">1</field>
-            <field name="nextcall" eval="(datetime.now() + timedelta(days=0)).strftime('%Y-%m-%d 12:01:00')"/>
         </record>
     </data>
 </odoo>

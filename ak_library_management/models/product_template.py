@@ -115,8 +115,9 @@ class ProductTemplate(models.Model):
         """
         Using this method can change the state into returned.
         """
-        self.write({'state': 'returned'})
-        self.message_post(body=f'{self.env.user.name} is return book. Date: {date.today()}')
+        if self.state == 'borrowed':
+            self.write({'state': 'returned'})
+            self.message_post(body=f'{self.env.user.name} is return book. Date: {date.today()}')
 
     def borrow_books(self):
         """
@@ -129,11 +130,3 @@ class ProductTemplate(models.Model):
             'view_mode': 'form',
             'target': 'new',
         }
-
-    # def book_returned_reminder(self):
-    #     borrowed_book=self.env['product.template'].search([('state', '=', 'borrowed')])
-    #     for activity_deadline in borrowed_book:
-    #         print("\n activity_deadline:",activity_deadline.activity_ids['date_deadline'])
-    #         alert_date= activity_deadline.activity_ids['date_deadline'] - timedelta(days = 2)
-    #         if date.today() == alert_date:
-    #             print("\n\ndate for returned:::::",date.today())

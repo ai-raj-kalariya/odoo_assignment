@@ -25,6 +25,9 @@ class LibraryMember(models.Model):
     membership_date = fields.Date(
         string="Membership Start Date"
     )
+    html= fields.Html(
+        string="Description"
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
