@@ -33,7 +33,7 @@
                         </group>
                     </group>
                     <footer>
-                        <button string="Conform" name="action_confirm" type="object" class="btn-primary"/>
+                        <button string="Confirm" name="action_confirm" type="object" class="btn-primary"/>
                         <button string="Cancel" special="cancel" class="btn-primary"/>
                     </footer>
                 </sheet>

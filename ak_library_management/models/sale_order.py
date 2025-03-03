@@ -27,11 +27,15 @@ class SaleOrder(models.Model):
         param: self
         return: base conform method
         """
-        low_quantity_product = self.order_line.filtered(lambda line: line.product_template_id.qty_available < 5)
+        low_quantity_product = []
+        for line in self.order_line:
+            if line.product_template_id.qty_available < 5:
+                low_quantity_product.append(line.product_template_id.name)
+        # low_quantity_product = self.order_line.filtered(lambda line: line.product_template_id.qty_available < 5)
         if (self.is_manager_approve and self.env.user.is_manager) or not low_quantity_product:
             return super().action_confirm()
         else:
-            product_list = "\n".join([line.product_template_id.name for line in low_quantity_product])
+            product_list = "\n".join([product for product in low_quantity_product])
             message = f"Approval needed! The following books have low stock:\n{product_list}"
             return {
                 'type': 'ir.actions.act_window',
