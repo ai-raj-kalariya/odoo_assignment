@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
+    <data>
         <record forcecreate="True" id="ir_cron_book_returned_reminder" model="ir.cron">
             <field name="name">Book Returned Reminder</field>
             <field name="model_id" ref="model_borrow_transaction_history"/>
@@ -13,3 +13,4 @@
         </record>
     </data>
 </odoo>
+

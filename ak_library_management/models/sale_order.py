@@ -31,7 +31,6 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if line.product_template_id.qty_available < 5:
                 low_quantity_product.append(line.product_template_id.name)
-        # low_quantity_product = self.order_line.filtered(lambda line: line.product_template_id.qty_available < 5)
         if (self.is_manager_approve and self.env.user.is_manager) or not low_quantity_product:
             return super().action_confirm()
         else:

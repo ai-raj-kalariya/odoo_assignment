@@ -120,11 +120,19 @@ class BorrowTransactionHistory(models.Model):
        - If the due date has passed, an overdue alert is triggered.
        This method should be scheduled to run periodically.
         """
-        borrowed_book = self.env['product.template'].search([('state', '=', 'borrowed')])
-        for activity_deadline in borrowed_book:
-            print("\n activity_deadline:", activity_deadline.activity_ids['date_deadline'])
-            alert_date = activity_deadline.activity_ids['date_deadline'] - timedelta(days=2)
-            if date.today() == alert_date:
-                print("\n\ndate for returned:::::", date.today())
-            if date.today() > alert_date:
-                print("\n\nbook name:::::", activity_deadline)
+        alert_date_deadline = date.today() + timedelta(days=2)
+        recs = self.search([('borrow_end_date', '=', alert_date_deadline)])
+        for rec in recs:
+            print("\n\n......\n\n", rec)
+            self.env['bus.bus']._sendone(rec.customer_id, 'simple_notification', {
+                'type': 'warning',
+                'message': f"reminder: your book return date is {rec.borrow_end_date}",
+            })
+
+    def is_returned(self):
+        for book in self.books_ids:
+            self.env['bus.bus']._sendone(book.customer_id, 'simple_notification', {
+                'type': 'warning',
+                'message': f"{book.customer_id.name} your return book has been recorded.",
+            })
+            book.is_returned()
