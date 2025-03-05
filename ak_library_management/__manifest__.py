@@ -3,7 +3,7 @@
     "name": "Library",
     "version": "18.0.1.4.0",
     "license": "Other proprietary",
-    "depends": ["sale_management","stock"],
+    "depends": ["sale_management","stock","base_automation"],
     "author":"Raj",
     "website": "https://www.aktivsoftware.com",
     "data": [
