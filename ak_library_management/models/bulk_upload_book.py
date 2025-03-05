@@ -53,7 +53,6 @@ class BulkUploadBook(models.TransientModel):
                     'type': 'success',
                     'message': f"{products.name} is created.",
                     })
-        return self
 
     def action_created_book(self):
         """
