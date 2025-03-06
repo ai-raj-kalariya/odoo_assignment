@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models, api, _
+from odoo import fields, models
 
 
 class SaleOrderWarningWizard(models.TransientModel):
@@ -16,11 +16,10 @@ class SaleOrderWarningWizard(models.TransientModel):
     sale_order_id = fields.Many2one(
         'sale.order',
         string="Sale Order",
-        required=True
     )
 
     def action_mark_approved(self):
-        """ Set check_ok = True in Sale Order but do not confirm it."""
+        """ Set is_check_ok = True in Sale Order but do not confirm it."""
         if self.sale_order_id:
-            self.sale_order_id.write({'check_ok': True})
+            self.sale_order_id.write({'is_check_ok': True})
         return {'type': 'ir.actions.act_window_close'}

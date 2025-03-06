@@ -184,7 +184,6 @@ class BorrowTransactionHistory(models.Model):
                         "Please return them before borrowing new books."
                     )
 
-
     def _send_alert_mail(self):
         all_books = self.search([])
         print("\n\nreturn_date", self.return_date)

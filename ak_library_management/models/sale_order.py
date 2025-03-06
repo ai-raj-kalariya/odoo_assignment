@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
     """
     _inherit = 'sale.order'
 
-    check_ok = fields.Boolean(
+    is_check_ok = fields.Boolean(
         string="Check"
     )
     is_manager_approve = fields.Boolean(
@@ -31,9 +31,10 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if line.product_template_id.qty_available < 5:
                 low_quantity_product.append(line.product_template_id.name)
-        if (self.is_manager_approve and self.env.user.is_manager) or not low_quantity_product:
+        if ((self.is_manager_approve and self.env.user.is_manager)
+                or not low_quantity_product or self.is_manager_approve):
             return super().action_confirm()
-        else:
+        elif low_quantity_product and not self.is_manager_approve:
             product_list = "\n".join([product for product in low_quantity_product])
             message = f"Approval needed! The following books have low stock:\n{product_list}"
             return {
@@ -57,7 +58,7 @@ class SaleOrder(models.Model):
         """
         if not self.env.user.is_manager:
             raise UserError('Only managers can approve orders.')
-        self.write({'check_ok': False, 'is_manager_approve': True})
+        self.write({'is_check_ok': False, 'is_manager_approve': True})
 
     def reject_order(self):
         """
