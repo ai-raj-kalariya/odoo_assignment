@@ -36,20 +36,27 @@ class BorrowTransactionHistory(models.Model):
     )
     deposit_amount = fields.Float(
         string="Deposit Amount",
-        required=True
+        required = True,
     )
     is_member = fields.Boolean(
         related='customer_id.is_member'
     )
+    # return_date = fields.Date(
+    #     string="Return Date",
+    #     readonly=True
+    # )
 
-    @api.constrains('borrow_start_date', 'borrow_end_date')
+    @api.constrains('borrow_start_date', 'borrow_end_date','deposit_amount')
     def _check_end_date(self):
         """
         Ensures that the borrow end date is not before the start date.
         :raise ValidationError: If the borrow end date is earlier than the start date.
+        :raise ValidationError: If Non member is trying to borrow book without enter deposit amount.
         """
         if self.borrow_end_date < self.borrow_start_date:
             raise ValidationError("Borrow end date should be higher than start date.")
+        if self.deposit_amount == 0 and not self.is_member:
+            raise ValidationError("Deposit amount is required for non member.")
 
     def get_warning_wizard(self, name, message):
         """
@@ -69,6 +76,18 @@ class BorrowTransactionHistory(models.Model):
                 'default_message': message,
             }
         }
+
+    def decrease_product_quantity(self):
+        """
+        Reduce stock for all books in the borrow transaction.
+        """
+        for rec in self.books_ids:
+            product_id = self.env['product.product'].search([('name', '=', rec.name)], limit=1)
+            product_location = self.env['stock.quant'].search([('product_id', '=', product_id.id)], limit=1)
+            if product_id and product_location and product_location.quantity > 0:
+                self.env['stock.quant']._update_available_quantity(
+                    product_id, product_location.location_id, quantity=-1
+                )
 
     def action_confirm(self):
         """
@@ -100,8 +119,8 @@ class BorrowTransactionHistory(models.Model):
 
             if books:
                 name = "Warning Wizard"
-                message = (f"Customer already has [{self.customer_id.name}]"
-                           f" open borrow transactions with {books} books."
+                message = (f"{self.customer_id.name} already has {books}"
+                           f" open borrow transactions with {len(self.books_ids)} books."
                            " Are you want to borrow more books?")
                 return self.get_warning_wizard(name, message)
 
@@ -109,9 +128,7 @@ class BorrowTransactionHistory(models.Model):
                 "Warning Wizard",
                 "Are you want to allow borrowing more than 5 books for this customer?")
 
-        for rec in self.books_ids:
-            if rec.qty_available:
-                rec.qty_available -= 1
+        return self.decrease_product_quantity()
 
     def book_returned_reminder(self):
         """
@@ -137,13 +154,13 @@ class BorrowTransactionHistory(models.Model):
         Marks books as returned and sends a confirmation notification to the customer.
         """
         for book in self.books_ids:
-            print('\n\nbook state', book.state)
             if book.state == 'borrowed':
                 book.write({'state': 'returned'})
                 self.env['bus.bus']._sendone(self.customer_id, 'simple_notification', {
                     'type': 'success',
                     'message': f"{book.name} your return book has been recorded.",
                 })
+                # self.write({'return_date': datetime.today()})
 
     def automated_action(self):
         """
@@ -166,3 +183,18 @@ class BorrowTransactionHistory(models.Model):
                         f"Customer {record.customer_id.name} has overdue books: {overdue_books_list}. "
                         "Please return them before borrowing new books."
                     )
+
+
+    def _send_alert_mail(self):
+        all_books = self.search([])
+        print("\n\nreturn_date", self.return_date)
+        for rec in all_books:
+            if rec.borrow_end_date < date.today():
+                book_name = []
+                for book in rec.books_ids:
+                    if book.state == 'borrowed' and self.return_date == False:
+                        book_name.append(book.name)
+                        self.env['bus.bus']._sendone(rec.customer_id, 'simple_notification', {
+                            'type': 'danger',
+                            'message': f"reminder: your {', '.join(book_name)} book return date is {rec.borrow_end_date}",
+                        })

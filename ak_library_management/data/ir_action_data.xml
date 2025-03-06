@@ -10,14 +10,15 @@
     </record>
     <!--server action for due date-->
     <record id="server_actions_borrow_transaction_history" model="ir.actions.server">
-        <field name="name">Due Date Check</field>
+        <field name="name">Check Due Date</field>
         <field name="model_id" ref="model_borrow_transaction_history"/>
+        <field name="binding_model_id" ref="model_borrow_transaction_history"/>
         <field name="state">code</field>
         <field name="code">action = records.automated_action()</field>
     </record>
     <!--Automated action-->
     <record id="automated_action_borrow_transaction_history" model="base.automation">
-        <field name="name">Due Date Check</field>
+        <field name="name">Check Due Date</field>
         <field name="model_id" ref="model_borrow_transaction_history"/>
         <field name="trigger">on_create_or_write</field>
         <field name="action_server_ids" eval="[(4,ref('server_actions_borrow_transaction_history'))]"/>

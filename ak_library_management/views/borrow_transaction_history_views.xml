@@ -15,16 +15,22 @@
         </field>
     </record>
 
-    <record id="view_borrow_transaction_search" model="ir.ui.view">
-            <field name="name">borrow.transaction.history.search</field>
-            <field name="model">borrow.transaction.history</field>
-            <field name="arch" type="xml">
-                <search string="Search Borrow Transactions">
-                    <field name="customer_id" string="Customer"/>
-                    <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
-                </search>
-            </field>
+    <!--Search view-->
+    <record id="borrow_transaction_history_search_view" model="ir.ui.view">
+        <field name="name">borrow.transaction.history.search.view</field>
+        <field name="model">borrow.transaction.history</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="customer_id"/>
+                <group>
+                    <filter name="return_date_group_by"
+                            context="{'group_by':'borrow_end_date'}"
+                            domain="[]" string="Due Date"/>
+                </group>
+            </search>
+        </field>
     </record>
+
     <!--Form view-->
     <record id="borrow_transaction_history_form_view" model="ir.ui.view">
         <field name="name">borrow.transaction.history.form.view</field>
@@ -36,6 +42,7 @@
                         <group>
                             <field name="customer_id"/>
                             <field name="deposit_amount" invisible="is_member"/>
+<!--                            <field name="return_date"/>-->
                         </group>
                         <group>
                             <field name="borrow_start_date"/>
