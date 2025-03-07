@@ -1,10 +1,14 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 library_book,access_library_book,model_library_book,base.group_user,1,1,1,1
-library_book_tags,access_library_book_tags,model_library_book_tags,base.group_user,1,1,1,1
+library_book_tags,access_library_book_tags,model_library_book_tags,group_library_admin,1,1,1,1
 library_member,access_library_member,model_library_member,base.group_user,1,1,1,1
 library_book_category,access_library_book_category,model_library_book_category,base.group_user,1,1,1,1
 library_library,access_library_library,model_library_library,base.group_user,1,1,1,1
 bulk_upload_book,access_bulk_upload_book,model_bulk_upload_book,base.group_user,1,1,1,1
 borrow_transaction_history,access_borrow_transaction_history,model_borrow_transaction_history,base.group_user,1,1,1,1
 sale_order_warning_wizard,access_sale_order_warning_wizard,model_sale_order_warning_wizard,base.group_user,1,1,1,1
-borrow.transaction.history.wizard,access_borrow_transaction_history_wizard,model_borrow_transaction_history_wizard,base.group_user,1,1,1,1
+borrow_transaction_history_wizard,access_borrow_transaction_history_wizard,model_borrow_transaction_history_wizard,base.group_user,1,1,1,1
+
+stock_warehouse_admin,access_stock_warehouse_admin,model_stock_warehouse,group_library_admin,1,1,1,1
+stock_warehouse_assistant,access_stock_warehouse_assistant,model_stock_warehouse,group_library_assistant,1,1,1,0
+stock_warehouse_worker,access_stock_warehouse_worker,model_stock_warehouse,group_library_worker,1,0,0,0

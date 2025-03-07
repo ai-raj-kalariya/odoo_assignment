@@ -1,4 +1,4 @@
-# Changelog
+# CHANGELOG
 
 ## [18.0.1.2.2] - 2025-04-03 | Method overriding
 
@@ -26,7 +26,7 @@
 
 -Create mail template 
 
-## [18.0.1.2.3] - 2025-06-03 | Method overriding
+## [18.0.1.6.0] - 2025-06-03 | Method overriding
 
 - Fixed once the manager approves, the user can confirm the order without the popup issue.
 - Give proper name to the file and flag
