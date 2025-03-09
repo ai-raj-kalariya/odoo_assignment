@@ -31,3 +31,20 @@
 - Fixed once the manager approves, the user can confirm the order without the popup issue.
 - Give proper name to the file and flag
 - Remove unnecessary parameter
+
+## [18.0.1.7.0] - 2025-10-03 | Mail Template
+
+- Create mail template for borrow due date and renew membership 
+- Add new button Send Mail for sending mail in library member model
+- Add new field is_librarian in res_user which is used in member model
+- Add new method action_send_mail for renew membership in member model
+- Change string name in product template Published_date to Published Date
+- Create Qweb report
+
+## [18.0.1.8.0] - 2025-10-03 | Group Access & Record rules
+
+- Inherit stock warehouse model and add new field library_assistant and library_worker
+- Inherit res config settings and add new field borrowing_limit 
+- Create security file for grouping and record rule
+- modify ir.model.access.csv for access right
+- 'hr' Dependency add in manifest 

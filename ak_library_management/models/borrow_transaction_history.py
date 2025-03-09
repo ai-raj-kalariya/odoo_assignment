@@ -14,6 +14,7 @@ class BorrowTransactionHistory(models.Model):
     - Reminders for due and overdue books.
     """
     _name = 'borrow.transaction.history'
+    _description='Borrow transaction history'
     _rec_name = 'customer_id'
 
     customer_id = fields.Many2one(
@@ -41,10 +42,6 @@ class BorrowTransactionHistory(models.Model):
     is_member = fields.Boolean(
         related='customer_id.is_member'
     )
-    # return_date = fields.Date(
-    #     string="Return Date",
-    #     readonly=True
-    # )
 
     @api.constrains('borrow_start_date', 'borrow_end_date','deposit_amount')
     def _check_end_date(self):
@@ -183,17 +180,3 @@ class BorrowTransactionHistory(models.Model):
                         f"Customer {record.customer_id.name} has overdue books: {overdue_books_list}. "
                         "Please return them before borrowing new books."
                     )
-
-    def _send_alert_mail(self):
-        all_books = self.search([])
-        print("\n\nreturn_date", self.return_date)
-        for rec in all_books:
-            if rec.borrow_end_date < date.today():
-                book_name = []
-                for book in rec.books_ids:
-                    if book.state == 'borrowed' and self.return_date == False:
-                        book_name.append(book.name)
-                        self.env['bus.bus']._sendone(rec.customer_id, 'simple_notification', {
-                            'type': 'danger',
-                            'message': f"reminder: your {', '.join(book_name)} book return date is {rec.borrow_end_date}",
-                        })

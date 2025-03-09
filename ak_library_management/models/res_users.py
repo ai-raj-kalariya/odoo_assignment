@@ -13,3 +13,6 @@ class ResUsers(models.Model):
     is_manager = fields.Boolean(
         string="Is Manager"
     )
+    is_librarian = fields.Boolean(
+        string="Is Librarian"
+    )

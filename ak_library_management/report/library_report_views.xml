@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="library_qweb_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>Library Qweb Report</h2>
+                            <h3><span t-field="o.name"/> # <span t-field="o.id"/></h3>
+                            <br/>
+                            <br/>
+                            <table>
+                                <tr style="width: 100%;">
+                                    <th style="width: 25%;"><b>Librarian Name</b><br/><span t-field="o.librarian_id.name"/></th>
+                                    <th style="width: 25%;"><b>Date</b></th>
+                                    <th style="width: 25%;"><b>Total Borrowed Books Count</b></th>
+                                    <th style="width: 25%;"><b>Location</b><br/><span t-field="o.location"/></th>
+                                </tr>
+                            </table>
+                            <h2></h2>
+                            <ul>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: yellow;"><b>Book</b></th>
+                                            <th style="color: yellow;">Price</th>
+                                            <th style="color: yellow;">Published Date</th>
+                                            <th style="color: yellow;">Author</th>
+                                        </tr>
+                                    </thead>
+                                    <t t-foreach="o.product_ids" t-as="p">
+                                        <tbody>
+                                            <t t-foreach="o.product_ids" t-as="p">
+                                                <tr>
+                                                    <td>
+                                                        <b><span t-field="p.barcode"/></b><br/>
+                                                        <span t-field="p.name"/><br/><br/>
+                                                        <span><b>On Hand</b></span><br/>
+                                                        <span t-field="p.pages"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="p.list_price"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="p.published_date"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="p.author_id.name"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </t>
+                                </table>
+                            </ul>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+
+    <record id="library_report_id" model="ir.actions.report">
+        <field name="name">Library Report</field>
+        <field name="model">library.library</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ak_library_management.library_qweb_report_template</field>
+        <field name="report_file">ak_library_management.library_qweb_report_template</field>
+    </record>
+</odoo>

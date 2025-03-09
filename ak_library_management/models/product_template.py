@@ -24,7 +24,7 @@ class ProductTemplate(models.Model):
         string="Edition"
     )
     published_date = fields.Date(
-        string="Published_date"
+        string="Published Date"
     )
     pages = fields.Integer(
         string="Pages"
