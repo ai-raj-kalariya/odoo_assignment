@@ -17,10 +17,10 @@
                             <t t-out="[book.name for book in object.books_ids]"/>
                         </p>
                         <br/>
-                        Your book Due Date is
+                        Your book Due Date was
                         <t t-out="object.borrow_end_date or ''"/>
                         <t/>
-                        so please returned the above books before Due Date.
+                        so please returned the above books.
                         <br/>
                         Thank You
                     </p>

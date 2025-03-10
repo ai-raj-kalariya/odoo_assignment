@@ -48,3 +48,8 @@
 - Create security file for grouping and record rule
 - modify ir.model.access.csv for access right
 - 'hr' Dependency add in manifest 
+
+## [18.0.1.8.1] - 2025-10-03 | Mail Template
+
+- Changes in book_returned_reminder method in transaction model
+- Change schedule action interval_type to week

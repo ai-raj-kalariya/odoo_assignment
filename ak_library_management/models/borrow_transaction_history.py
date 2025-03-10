@@ -14,7 +14,7 @@ class BorrowTransactionHistory(models.Model):
     - Reminders for due and overdue books.
     """
     _name = 'borrow.transaction.history'
-    _description='Borrow transaction history'
+    _description = 'Borrow transaction history'
     _rec_name = 'customer_id'
 
     customer_id = fields.Many2one(
@@ -37,13 +37,13 @@ class BorrowTransactionHistory(models.Model):
     )
     deposit_amount = fields.Float(
         string="Deposit Amount",
-        required = True,
+        required=True,
     )
     is_member = fields.Boolean(
         related='customer_id.is_member'
     )
 
-    @api.constrains('borrow_start_date', 'borrow_end_date','deposit_amount')
+    @api.constrains('borrow_start_date', 'borrow_end_date', 'deposit_amount')
     def _check_end_date(self):
         """
         Ensures that the borrow end date is not before the start date.
@@ -130,21 +130,15 @@ class BorrowTransactionHistory(models.Model):
     def book_returned_reminder(self):
         """
        Sends a reminder for books due in 2 days or overdue.
-       - If the due date is in 2 days, a reminder is triggered.
+       - If the due date is passed, a reminder is triggered.
        - If the due date has passed, an overdue alert is triggered.
        This method should be scheduled to run periodically.
         """
-        all_books = self.search([])
-        alert_date_deadline = date.today() + timedelta(days=2)
+        all_books = self.search([('borrow_end_date', '<', date.today()),
+                                 ('books_ids.state', '=', 'borrowed')])
         for rec in all_books:
-            if rec.borrow_end_date == alert_date_deadline:
-                book_name = []
-                for book in rec.books_ids:
-                    book_name.append(book.name)
-                self.env['bus.bus']._sendone(rec.customer_id, 'simple_notification', {
-                    'type': 'warning',
-                    'message': f"reminder: your {', '.join(book_name)} book return date is {rec.borrow_end_date}",
-                })
+            mail_template = self.env.ref('ak_library_management.email_template_library_book_reminder')
+            mail_template.send_mail(rec.id, force_send=True)
 
     def is_book_returned(self):
         """
@@ -157,7 +151,6 @@ class BorrowTransactionHistory(models.Model):
                     'type': 'success',
                     'message': f"{book.name} your return book has been recorded.",
                 })
-                # self.write({'return_date': datetime.today()})
 
     def automated_action(self):
         """
