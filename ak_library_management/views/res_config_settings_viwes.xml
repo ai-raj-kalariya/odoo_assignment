@@ -5,17 +5,17 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//block[@name='product_setting_container']/field[@name='group_stock_packaging']]"
-                   position="after">
-                <field name="borrowing_limit"/>
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="row mt16">
+                    <div class="col-lg-6 col-md-12">
+                        <label for="borrowing_limit"/>
+                        <field name="borrowing_limit"/>
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>
 </odoo>
-
-
-        <!--<block title="Products" name="product_setting_container">-->
-        <!--                            <setting id="product_attributes" help="Set product attributes (e.g. color, size) to manage variants" documentation="/applications/sales/sales/products_prices/products/variants.html">-->
         <!--                                <field name="group_product_variant"/>-->
         <!--                                <div class="content-group">-->
         <!--                                    <div class="mt8" invisible="not group_product_variant">-->

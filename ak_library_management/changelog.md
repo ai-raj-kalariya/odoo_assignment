@@ -53,3 +53,8 @@
 
 - Changes in book_returned_reminder method in transaction model
 - Change schedule action interval_type to week
+
+## [18.0.1.9.0] - 2025-10-03 | Qweb Report
+
+- Added new custom qweb report
+- Giving proper styling to content (article)

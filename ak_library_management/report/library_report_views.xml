@@ -7,53 +7,58 @@
                     <t t-call="web.external_layout">
                         <div class="page">
                             <h2>Library Qweb Report</h2>
-                            <h3><span t-field="o.name"/> # <span t-field="o.id"/></h3>
+                            <h3>
+                                <span t-field="o.name"/>
+                                #
+                                <span t-field="o.id"/>
+                            </h3>
                             <br/>
                             <br/>
-                            <table>
-                                <tr style="width: 100%;">
-                                    <th style="width: 25%;"><b>Librarian Name</b><br/><span t-field="o.librarian_id.name"/></th>
-                                    <th style="width: 25%;"><b>Date</b></th>
-                                    <th style="width: 25%;"><b>Total Borrowed Books Count</b></th>
-                                    <th style="width: 25%;"><b>Location</b><br/><span t-field="o.location"/></th>
-                                </tr>
-                            </table>
-                            <h2></h2>
-                            <ul>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="color: yellow;"><b>Book</b></th>
-                                            <th style="color: yellow;">Price</th>
-                                            <th style="color: yellow;">Published Date</th>
-                                            <th style="color: yellow;">Author</th>
-                                        </tr>
-                                    </thead>
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <strong>Librarian Name</strong>
+                                    <div t-field="o.librarian_id.name">Mitchell Admin</div>
+                                </div>
+                                <div class="col">
+                                    <strong>Date</strong>
+                                    <div>10-March</div>
+                                </div>
+                                <div class="col">
+                                    <strong>Total Borrowed Books Count</strong>
+                                    <div t-out="float(o.borrowed_book_count)">0</div>
+                                </div>
+                                <div class="col">
+                                    <strong>Location</strong>
+                                    <div t-field="o.location">Ahm</div>
+                                </div>
+                            </div>
+                            <table class="o_has_total_table table o_main_table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th style="color: yellow;">
+                                            <b>Book</b>
+                                        </th>
+                                        <th style="color: yellow;">Price</th>
+                                        <th style="color: yellow;">Published Date</th>
+                                        <th style="color: yellow;">Author</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <t t-foreach="o.product_ids" t-as="p">
-                                        <tbody>
-                                            <t t-foreach="o.product_ids" t-as="p">
-                                                <tr>
-                                                    <td>
-                                                        <b><span t-field="p.barcode"/></b><br/>
-                                                        <span t-field="p.name"/><br/><br/>
-                                                        <span><b>On Hand</b></span><br/>
-                                                        <span t-field="p.pages"/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-field="p.list_price"/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-field="p.published_date"/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-field="p.author_id.name"/>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
+                                        <tr>
+                                            <td><b><span t-field="p.barcode"/></b><br/><span t-field="p.name"/>
+                                                <br/>
+                                                <br/>
+                                                <span><b>On Hand</b></span><br/><span t-out="int(p.pages)"/>
+                                            </td>
+                                            <td><span t-field="p.list_price"/></td>
+                                            <td><span t-field="p.published_date" t-options="{'format':'d/MMM/yyyy'}"/></td>
+                                            <td><span t-field="p.author_id.name"/></td>
+                                        </tr>
                                     </t>
-                                </table>
-                            </ul>
+                                </tbody>
+                            </table>
+                            <p t-field="o.notes"/>
                         </div>
                     </t>
                 </t>

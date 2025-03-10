@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Library",
-    "version": "18.0.1.8.1",
+    "version": "18.0.1.9.0",
     "license": "Other proprietary",
     "depends": ["sale_management","hr","stock","base_automation"],
     "author":"Raj",
@@ -10,6 +10,7 @@
         "security/security.xml",
         "security/ir.model.access.csv",
         "report/library_report_views.xml",
+        "report/custom_library_report_views.xml",
         "views/library_book_tags_views.xml",
         "views/library_book_category.xml",
         "views/library_library_views.xml",
@@ -19,6 +20,7 @@
         "views/bulk_upload_book.xml",
         "views/res_users_views.xml",
         "views/res_partner_views.xml",
+        # "views/res_config_settings_viwes.xml",
         "views/sale_order_views.xml",
         "views/borrow_transaction_history_views.xml",
         "views/stock_warehouse_views.xml",
