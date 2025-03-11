@@ -120,19 +120,49 @@ class BorrowTransactionHistory(models.Model):
        - If the due date has passed, an overdue alert is triggered.
        This method should be scheduled to run periodically.
         """
+        all_books = self.search([])
         alert_date_deadline = date.today() + timedelta(days=2)
-        recs = self.search([('borrow_end_date', '=', alert_date_deadline)])
-        for rec in recs:
-            print("\n\n......\n\n", rec)
-            self.env['bus.bus']._sendone(rec.customer_id, 'simple_notification', {
-                'type': 'warning',
-                'message': f"reminder: your book return date is {rec.borrow_end_date}",
-            })
+        for rec in all_books:
+            if rec.borrow_end_date == alert_date_deadline:
+                book_name = []
+                for book in rec.books_ids:
+                    book_name.append(book.name)
+                self.env['bus.bus']._sendone(rec.customer_id, 'simple_notification', {
+                    'type': 'warning',
+                    'message': f"reminder: your {', '.join(book_name)} book return date is {rec.borrow_end_date}",
+                })
 
-    def is_returned(self):
+    def is_book_returned(self):
+        """
+        Marks books as returned and sends a confirmation notification to the customer.
+        """
         for book in self.books_ids:
-            self.env['bus.bus']._sendone(book.customer_id, 'simple_notification', {
-                'type': 'warning',
-                'message': f"{book.customer_id.name} your return book has been recorded.",
-            })
-            book.is_returned()
+            print('\n\nbook state', book.state)
+            if book.state == 'borrowed':
+                book.write({'state': 'returned'})
+                self.env['bus.bus']._sendone(self.customer_id, 'simple_notification', {
+                    'type': 'success',
+                    'message': f"{book.name} your return book has been recorded.",
+                })
+
+    def automated_action(self):
+        """
+        Prevents customers from borrowing new books if they have overdue books.
+        :raise ValidationError: If the customer has overdue books.
+        """
+        for record in self:
+            if record.customer_id and record.books_ids:
+                overdue_transactions = self.env['borrow.transaction.history'].search([
+                    ('customer_id', '=', record.customer_id.id),
+                    ('borrow_end_date', '<', fields.Date.today()),
+                    ('books_ids.state', '=', 'borrowed')
+                ])
+                if overdue_transactions:
+                    overdue_books = []
+                    for transaction in overdue_transactions:
+                        overdue_books += [book.name for book in transaction.books_ids if book.state == 'borrowed']
+                    overdue_books_list = ", ".join(overdue_books)
+                    raise ValidationError(
+                        f"Customer {record.customer_id.name} has overdue books: {overdue_books_list}. "
+                        "Please return them before borrowing new books."
+                    )

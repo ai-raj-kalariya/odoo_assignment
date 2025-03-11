@@ -12,3 +12,9 @@
 - Change Field and button names
 - Enhanced model-level doc string
 - Fixed dependency error 
+
+## [18.0.1.4.0] - 2025-04-03 | Schedule Actions
+
+- Crete method for handling actions
+- Update the reminder string to dynamic
+- create ir_action and cron action

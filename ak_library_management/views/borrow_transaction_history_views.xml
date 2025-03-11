@@ -24,7 +24,7 @@
                     <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
                 </search>
             </field>
-        </record>
+    </record>
     <!--Form view-->
     <record id="borrow_transaction_history_form_view" model="ir.ui.view">
         <field name="name">borrow.transaction.history.form.view</field>
