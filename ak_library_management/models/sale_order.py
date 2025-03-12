@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, models, fields
-from odoo.exceptions import ValidationError, UserError
+from odoo import models, fields
+from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
@@ -34,7 +34,7 @@ class SaleOrder(models.Model):
         if ((self.is_manager_approve and self.env.user.is_manager)
                 or not low_quantity_product or self.is_manager_approve):
             return super().action_confirm()
-        elif low_quantity_product and not self.is_manager_approve:
+        if low_quantity_product and not self.is_manager_approve:
             product_list = "\n".join([product for product in low_quantity_product])
             message = f"Approval needed! The following books have low stock:\n{product_list}"
             return {

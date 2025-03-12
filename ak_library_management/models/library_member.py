@@ -44,7 +44,8 @@ class LibraryMember(models.Model):
         for each new library member.
         """
         for val in vals_list:
-            val['membership_no'] = self.env['ir.sequence'].next_by_code('library.member') or _('New')
+            val['membership_no'] = (self.env['ir.sequence'].next_by_code('library.member')
+                                    or _('New'))
         return super().create(vals_list)
 
     def action_send_mail(self):
@@ -54,7 +55,8 @@ class LibraryMember(models.Model):
         :raises ValidationError: If the user is not a librarian.
         :return: A mail compose wizard action to send the email.
         """
-        mail_template = self.env.ref('ak_library_management.email_template_library_membership_renewal')
+        mail_template = self.env.ref(
+            'ak_library_management.email_template_library_membership_renewal')
         if self.env.user.is_librarian:
             return {
                 'type': 'ir.actions.act_window',

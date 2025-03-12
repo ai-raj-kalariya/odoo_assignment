@@ -58,3 +58,8 @@
 
 - Added new custom qweb report
 - Giving proper styling to content (article)
+
+## [18.0.1.10.0] - 2025-12-03 | Borrow Transaction History
+
+- Optimize code and Use appropriate domain for searching record.
+

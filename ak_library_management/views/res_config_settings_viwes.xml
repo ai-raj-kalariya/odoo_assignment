@@ -3,39 +3,13 @@
     <record id="res_config_settings_form_view" model="ir.ui.view">
         <field name="name">res.config.settings.form.view</field>
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div class="row mt16">
-                    <div class="col-lg-6 col-md-12">
-                        <label for="borrowing_limit"/>
-                        <field name="borrowing_limit"/>
-                    </div>
-                </div>
+            <xpath expr="//field[@name='show_effect']" position="after">
+                <group>
+                    <field name="borrowing_limit"/>
+                </group>
             </xpath>
         </field>
     </record>
 </odoo>
-        <!--                                <field name="group_product_variant"/>-->
-        <!--                                <div class="content-group">-->
-        <!--                                    <div class="mt8" invisible="not group_product_variant">-->
-        <!--                                        <button name="%(product.attribute_action)d" icon="oi-arrow-right" type="action" string="Attributes" class="btn-link"/>-->
-        <!--                                    </div>-->
-        <!--                                </div>-->
-        <!--                            </setting>-->
-        <!--                            <setting id="sell_purchase_uom" help="Sell and purchase products in different units of measure" documentation="/applications/inventory_and_mrp/inventory/management/products/uom.html">-->
-        <!--                                <field name="group_uom"/>-->
-        <!--                                <div class="content-group">-->
-        <!--                                    <div class="mt8" invisible="not group_uom">-->
-        <!--                                        <button name="%(uom.product_uom_categ_form_action)d" icon="oi-arrow-right" type="action" string="Units Of Measure" class="btn-link"/>-->
-        <!--                                    </div>-->
-        <!--                                </div>-->
-        <!--                            </setting>-->
-        <!--                            <setting id="manage_product_packaging" title="Manage product packagings (e.g. pack of 6 bottles, box of 10 pieces)" help="Manage product packagings (e.g. pack of 6 bottles, box of 10 pieces)" documentation="/applications/inventory_and_mrp/inventory/product_management/product_tracking/packaging.html">-->
-        <!--                                <field name="group_stock_packaging"/>-->
-        <!--                                <div class="content-group">-->
-        <!--                                    <div class="mt8" invisible="not group_stock_packaging">-->
-        <!--                                        <button name="%(product.action_packaging_view)d" icon="oi-arrow-right" type="action" string="Product Packagings" class="btn-link"/>-->
-        <!--                                    </div>-->
-        <!--                                </div>-->
-        <!--                            </setting>-->

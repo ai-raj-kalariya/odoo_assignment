@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, date, timedelta
+from datetime import datetime, date
 from odoo import api, models, fields
 from odoo.exceptions import ValidationError
 
@@ -80,7 +80,8 @@ class BorrowTransactionHistory(models.Model):
         """
         for rec in self.books_ids:
             product_id = self.env['product.product'].search([('name', '=', rec.name)], limit=1)
-            product_location = self.env['stock.quant'].search([('product_id', '=', product_id.id)], limit=1)
+            product_location = self.env['stock.quant'].search(
+                [('product_id', '=', product_id.id)], limit=1)
             if product_id and product_location and product_location.quantity > 0:
                 self.env['stock.quant']._update_available_quantity(
                     product_id, product_location.location_id, quantity=-1
@@ -109,11 +110,9 @@ class BorrowTransactionHistory(models.Model):
             return self.get_warning_wizard(name, message)
 
         if len(self.books_ids) > 5:
-            search_record = self.search([('customer_id.name', "=", self.customer_id.name)])
-            books = []
-            [books.append(book.name) for rec in search_record[:-1]
-             for book in rec.books_ids if book.name not in books]
-
+            search_record = self.search([('customer_id', "=", self.customer_id.id)])
+            books = list(search_record[:-1].mapped("books_ids").filtered(
+                    lambda book: book.name).mapped("name"))
             if books:
                 name = "Warning Wizard"
                 message = (f"{self.customer_id.name} already has {books}"
@@ -137,7 +136,8 @@ class BorrowTransactionHistory(models.Model):
         all_books = self.search([('borrow_end_date', '<', date.today()),
                                  ('books_ids.state', '=', 'borrowed')])
         for rec in all_books:
-            mail_template = self.env.ref('ak_library_management.email_template_library_book_reminder')
+            mail_template = self.env.ref(
+                'ak_library_management.email_template_library_book_reminder')
             mail_template.send_mail(rec.id, force_send=True)
 
     def is_book_returned(self):
@@ -167,9 +167,11 @@ class BorrowTransactionHistory(models.Model):
                 if overdue_transactions:
                     overdue_books = []
                     for transaction in overdue_transactions:
-                        overdue_books += [book.name for book in transaction.books_ids if book.state == 'borrowed']
+                        overdue_books += [book.name for book in transaction.books_ids
+                                          if book.state == 'borrowed']
                     overdue_books_list = ", ".join(overdue_books)
                     raise ValidationError(
-                        f"Customer {record.customer_id.name} has overdue books: {overdue_books_list}. "
+                        f"Customer {record.customer_id.name} has overdue books:"
+                        f" {overdue_books_list}. "
                         "Please return them before borrowing new books."
                     )

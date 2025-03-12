@@ -99,11 +99,13 @@ class ProductTemplate(models.Model):
             self.activity_schedule(
                 act_type_xmlid='mail.mail_activity_data_todo',
                 summary="Book Return Reminder",
-                note=_(f"'{self.name}' borrowed by {self.env.user.name} should be return {due_date}."),
+                note=_(f"'{self.name}' borrowed by {self.env.user.name}"
+                       f" should be return {due_date}."),
                 user_id=self.env.user.id,
                 date_deadline=due_date
             )
-            self.message_post(body=f"{self.env.user.name} borrowed '{self.name}'. Due date: {due_date}")
+            self.message_post(body=f"{self.env.user.name} borrowed '{self.name}'."
+                                   f" Due date: {due_date}")
 
         if self.state == 'returned':
             self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', {

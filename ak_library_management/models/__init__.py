@@ -12,3 +12,4 @@ from . import sale_order
 from . import res_partner
 from . import borrow_transaction_history
 from . import stock_warehouse
+from . import res_config_settings
