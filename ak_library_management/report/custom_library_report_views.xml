@@ -2,11 +2,14 @@
 <odoo>
     <template id="basic_library_qweb_report_template">
         <div class="header o_standard_header">
-            <span style="text-align:left;">Your logo</span>
-            <span style="text-align:right;">
-                <p>Aktiv Software<br/>"https://www.aktivsoftware.com"<br/>Sindhubhavn India</p>
-            </span>
+            <div style="text-align:left;">Your logo</div>
+            <div style="text-align:right;">
+                <p>Aktiv Software<br/>"https://www.aktivsoftware.com"<br/>
+                    10th Floor,Binori Bsquare 3,Sindhu Bhavan Road <br/>
+                    India</p>
+            </div>
         </div>
+
         <div class="page">
             <h2>Library Qweb Report</h2>
             <h3>
@@ -34,7 +37,7 @@
                     <div t-field="o.location">Ahm</div>
                 </td>
             </table>
-            <table width="100%" style="border: 1px solid black; text-align:center;" >
+            <table class="table-bordered" width="100%" style="border: 1px solid black; text-align:center;" >
                 <thead>
                     <tr>
                         <th style="color: red;">
@@ -49,18 +52,13 @@
                     <t t-foreach="o.product_ids" t-as="p">
                         <tr style="border: 1px solid black;">
                             <td>
-                                <b>
-                                    <span t-field="p.barcode"/>
-                                </b>
+                                <b><span t-field="p.barcode"/></b>
                                 <br/>
                                 <span t-field="p.name"/>
+                                <br/><br/>
+                                <span><b>On Hand</b></span>
                                 <br/>
-                                <br/>
-                                <span>
-                                    <b>On Hand</b>
-                                </span>
-                                <br/>
-                                <span t-out="int(p.pages)"/>
+                                <span t-out="int(p.qty_available)"/>
                             </td>
                             <td>
                                 <span t-field="p.list_price"/>
@@ -79,10 +77,11 @@
         </div>
         <div class="footer o_standard_footer">
             <div class="row text-center" style="border-top: 1px solid black">
-                <p>Custom footer</p>
+                <span>www.aktivsoftware.com</span>
             </div>
         </div>
     </template>
+
     <template id="custom_library_qweb_report_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
@@ -90,6 +89,7 @@
             </t>
         </t>
     </template>
+
     <record id="custom_library_report_id" model="ir.actions.report">
         <field name="name">Custom Library Report</field>
         <field name="model">library.library</field>

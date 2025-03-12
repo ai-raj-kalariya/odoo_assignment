@@ -63,3 +63,11 @@
 
 - Optimize code and Use appropriate domain for searching record.
 
+## [18.0.1.11.0] - 2025-13-03 | Qweb report
+
+- Added new custom attachment report for email template
+- Modify header and footer in library report and custom library report
+- Added attachment report action in mail template 
+
+
+

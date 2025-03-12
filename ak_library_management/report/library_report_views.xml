@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+        <template id="external_layout_custom" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[@name='company_address']" position="replace">
+                <div name="company_address" style="text-align: right;">
+                    <span t-field="company.partner_id"
+                          t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                    <div t-if="company.email">
+                        Email:
+                        <span t-field="company.email"/>
+                    </div>
+                    <div t-if="company.phone">
+                        Phone:
+                        <span t-field="company.phone"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('o_footer_content')]" position="replace">
+                <div class="o_footer_content d-flex justify-content-between border-top pt-2">
+                    <div class="text-start">
+                        <span t-if="company.website" t-field="company.website"/>
+                    </div>
+                    <div class="text-end text-muted">
+                        Page:
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
         <template id="library_qweb_report_template">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
@@ -46,19 +76,37 @@
                                 <tbody>
                                     <t t-foreach="o.product_ids" t-as="p">
                                         <tr>
-                                            <td><b><span t-field="p.barcode"/></b><br/><span t-field="p.name"/>
+                                            <td>
+                                                <b>
+                                                    <span t-field="p.barcode"/>
+                                                </b>
+                                                <br/>
+                                                <span t-field="p.name"/>
                                                 <br/>
                                                 <br/>
-                                                <span><b>On Hand</b></span><br/><span t-out="int(p.pages)"/>
+                                                <span>
+                                                    <b>On Hand</b>
+                                                </span>
+                                                <br/>
+                                                <span t-out="int(p.pages)"/>
                                             </td>
-                                            <td><span t-field="p.list_price"/></td>
-                                            <td><span t-field="p.published_date" t-options="{'format':'d/MMM/yyyy'}"/></td>
-                                            <td><span t-field="p.author_id.name"/></td>
+                                            <td>
+                                                <span t-field="p.list_price"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="p.published_date" t-options="{'format':'d/MMM/yyyy'}"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="p.author_id.name"/>
+                                            </td>
                                         </tr>
                                     </t>
                                 </tbody>
                             </table>
-                            <p t-field="o.notes"/>
+                            <div id="library_note">
+                                <b>Note:</b>
+                                <p t-field="o.notes"/>
+                            </div>
                         </div>
                     </t>
                 </t>

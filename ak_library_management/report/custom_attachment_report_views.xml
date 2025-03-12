@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- custom layout for mail attachment-->
+     <template id="custom_attachment_qweb_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Member Details</h2>
+                        <div>
+                            <div class="col-6">
+                                <b>Member Name:</b>
+                                <span t-field="doc.member_id.name"/>
+                                <br/>
+                                <b>Membership Date:</b>
+                                <span t-field="doc.membership_date"/>
+                                <br/>
+                                <b>Email: </b>
+                                <span t-field="doc.email"/>
+                                <br/>
+                                <b>Phone: </b>
+                                <span t-field="doc.phone"/>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="custom_attachment_report_id" model="ir.actions.report">
+        <field name="name">Custom Attachment Report</field>
+        <field name="model">library.member</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ak_library_management.custom_attachment_qweb_report</field>
+        <field name="report_file">ak_library_management.custom_attachment_qweb_report</field>
+    </record>
+</odoo>

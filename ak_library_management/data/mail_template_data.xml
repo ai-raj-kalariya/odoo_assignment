@@ -43,6 +43,7 @@
                     <p>Thank you</p>
                 </div>
             </field>
+            <field name="report_template_ids" eval="[(4, ref('ak_library_management.custom_attachment_report_id'))]"/>
         </record>
     </data>
 </odoo>

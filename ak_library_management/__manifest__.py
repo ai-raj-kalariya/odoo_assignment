@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 {
     "name": "Library",
-    "version": "18.0.1.10.0",
+    "version": "18.0.1.11.0",
     "license": "Other proprietary",
     "depends": ["sale_management","hr","stock","base_automation"],
     "author":"Raj",
@@ -9,6 +8,7 @@
     "data": [
         "security/security.xml",
         "security/ir.model.access.csv",
+        "report/custom_attachment_report_views.xml",
         "report/library_report_views.xml",
         "report/custom_library_report_views.xml",
         "views/library_book_tags_views.xml",
@@ -36,3 +36,4 @@
     "auto_install": False,
     "application": False,
 }
+# -*- coding: utf-8 -*-
