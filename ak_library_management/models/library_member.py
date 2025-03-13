@@ -18,7 +18,6 @@ class LibraryMember(models.Model):
         readonly=True,
         default=lambda self: _('New')
     )
-
     member_id = fields.Many2one(
         comodel_name='res.partner',
         string="Member Name",

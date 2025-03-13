@@ -51,7 +51,8 @@
                                 </div>
                                 <div class="col">
                                     <strong>Date</strong>
-                                    <div>10-March</div>
+                                    <t t-set="today_date" t-value="datetime.datetime.now()"/>
+                                    <div t-out="today_date.strftime('%d/%b/%Y')"/>
                                 </div>
                                 <div class="col">
                                     <strong>Total Borrowed Books Count</strong>
@@ -65,12 +66,12 @@
                             <table class="o_has_total_table table o_main_table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th style="color: yellow;">
+                                        <th style="color: #f59842;">
                                             <b>Book</b>
                                         </th>
-                                        <th style="color: yellow;">Price</th>
-                                        <th style="color: yellow;">Published Date</th>
-                                        <th style="color: yellow;">Author</th>
+                                        <th style="color: #f59842;">Price</th>
+                                        <th style="color: #f59842;">Published Date</th>
+                                        <th style="color: #f59842;">Author</th>
                                     </tr>
                                 </thead>
                                 <tbody>

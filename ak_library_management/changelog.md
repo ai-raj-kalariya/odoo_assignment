@@ -69,5 +69,9 @@
 - Modify header and footer in library report and custom library report
 - Added attachment report action in mail template 
 
+## [18.0.1.12.0] - 2025-13-03 | Schedule action & Group Access
 
+- Create cron action and mail template for Book return reminder
+- Added functionality in product template for member can limited book borrowed.(borrowed_limit field)
+- Modify Record rule 
 

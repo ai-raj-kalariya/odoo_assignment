@@ -23,6 +23,11 @@ class ProductTemplate(models.Model):
     edition = fields.Char(
         string="Edition"
     )
+    user_id = fields.Many2one(
+        comodel_name='res.users',
+        string="User",
+        default=lambda self: self.env.ref('base.user_admin').id)
+
     published_date = fields.Date(
         string="Published Date"
     )

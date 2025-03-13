@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!--passed due date for return-->
+        <record forcecreate="True" id="ir_cron_book_returned_date_passed" model="ir.cron">
+            <field name="name">Book Returned Date passed</field>
+            <field name="model_id" ref="ak_library_management.model_borrow_transaction_history"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_send_overdue_mail()</field>
+            <field name="active" eval="True"/>
+            <field name="interval_type">weeks</field>
+            <field name="interval_number">1</field>
+        </record>
+        <!-- book return reminder-->
         <record forcecreate="True" id="ir_cron_book_returned_reminder" model="ir.cron">
             <field name="name">Book Returned Reminder</field>
-            <field name="model_id" ref="model_borrow_transaction_history"/>
+            <field name="model_id" ref="ak_library_management.model_borrow_transaction_history"/>
             <field name="state">code</field>
             <field name="code">model.book_returned_reminder()</field>
             <field name="active" eval="True"/>
-            <field name="interval_type">weeks</field>
+            <field name="interval_type">days</field>
             <field name="interval_number">1</field>
         </record>
     </data>

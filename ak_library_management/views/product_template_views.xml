@@ -53,6 +53,7 @@
                             <field name="published_date" required="sale_ok"/>
                             <field name="pages" required="sale_ok"/>
                             <field name="available" required="sale_ok"/>
+                            <field name="user_id" required="sale_ok" groups="ak_library_management.group_library_admin"/>
                         </group>
                     </group>
                 </page>

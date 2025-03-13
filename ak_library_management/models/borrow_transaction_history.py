@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from odoo import api, models, fields
 from odoo.exceptions import ValidationError
 
@@ -42,6 +42,12 @@ class BorrowTransactionHistory(models.Model):
     is_member = fields.Boolean(
         related='customer_id.is_member'
     )
+
+    is_borrowing_limit = fields.Boolean()
+    user_id = fields.Many2one(
+        comodel_name='res.users',
+        string="User",
+        default=lambda self: self.env.ref('base.user_admin').id)
 
     @api.constrains('borrow_start_date', 'borrow_end_date', 'deposit_amount')
     def _check_end_date(self):
@@ -97,6 +103,12 @@ class BorrowTransactionHistory(models.Model):
         :return: Warning wizard if any condition fails, else proceeds with the transaction.
         :rtype: dict or None
         """
+        search_record = self.search([('customer_id', "=", self.customer_id.id)])
+        total_borrowed_book = list(search_record[:-1].mapped("books_ids").filtered(
+                        lambda book: book.name).mapped("name"))
+        if total_borrowed_book > self.borrowing_limit:
+            self.write({'is_borrowing_limit': True})
+
         if self.customer_id.not_trust_worthy:
             return self.get_warning_wizard(
                 name='Borrowed book',
@@ -123,10 +135,9 @@ class BorrowTransactionHistory(models.Model):
             return self.get_warning_wizard(
                 "Warning Wizard",
                 "Are you want to allow borrowing more than 5 books for this customer?")
-
         return self.decrease_product_quantity()
 
-    def book_returned_reminder(self):
+    def _cron_send_overdue_mail(self):
         """
        Sends a reminder for books due in 2 days or overdue.
        - If the due date is passed, a reminder is triggered.
@@ -135,7 +146,25 @@ class BorrowTransactionHistory(models.Model):
         """
         all_books = self.search([('borrow_end_date', '<', date.today()),
                                  ('books_ids.state', '=', 'borrowed')])
-        for rec in all_books:
+        if all_books:
+            for rec in all_books:
+                mail_template = self.env.ref(
+                    'ak_library_management.email_template_library_book_return_date_passed')
+                mail_template.send_mail(rec.id, force_send=True)
+
+    def book_returned_reminder(self):
+        """
+       Sends a reminder for books due in 2 days.
+       - If the due date on next 2 days, a reminder is triggered.
+       This method should be scheduled to run periodically.
+        """
+        alert_date_deadline = date.today() + timedelta(days=2)
+        recs = self.search([('borrow_end_date', '=', alert_date_deadline)])
+        for rec in recs:
+            self.env['bus.bus']._sendone(rec.customer_id, 'simple_notification', {
+                'type': 'warning',
+                'message': f"reminder: your book return date is {rec.borrow_end_date}",
+            })
             mail_template = self.env.ref(
                 'ak_library_management.email_template_library_book_reminder')
             mail_template.send_mail(rec.id, force_send=True)

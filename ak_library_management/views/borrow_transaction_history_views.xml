@@ -42,7 +42,6 @@
                         <group>
                             <field name="customer_id"/>
                             <field name="deposit_amount" invisible="is_member"/>
-<!--                            <field name="return_date"/>-->
                         </group>
                         <group>
                             <field name="borrow_start_date"/>

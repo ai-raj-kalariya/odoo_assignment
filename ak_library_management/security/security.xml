@@ -22,30 +22,22 @@
         <field name="implied_ids" eval="[(4, ref('group_library_assistant'))]"/>
     </record>
 
-    <!--Record rules-->
+    <!--Record rules for product model-->
     <record id="library_admin_access_rule" model="ir.rule">
         <field name="name">Library Admin Access</field>
         <field name="model_id" ref="ak_library_management.model_product_template"/>
         <field name="domain_force">[(1, '=', 1)]</field>  <!-- Always True (Full Access) -->
     </record>
-
     <record id="library_assistant_access_rule" model="ir.rule">
         <field name="name">Library Assistant Access</field>
         <field name="model_id" ref="ak_library_management.model_product_template"/>
-        <field name="domain_force">[('state','!=','borrowed')]</field>
-        <field name="perm_create" eval="False"/>
-        <field name="perm_read" eval="False"/>
-        <field name="perm_write" eval="False"/>
+        <field name="domain_force">['|',('state','!=','borrowed'),('user_id','=', user.id)]</field>
         <field name="perm_unlink" eval="True"/>
     </record>
-
     <record id="library_worker_access_rule" model="ir.rule">
         <field name="name">Library Worker Access</field>
         <field name="model_id" ref="ak_library_management.model_product_template"/>
-        <field name="domain_force">[('create_uid','=', user.id)]</field>
-        <field name="perm_create" eval="False"/>
-        <field name="perm_read" eval="False"/>
-        <field name="perm_write" eval="False"/>
+        <field name="domain_force">[('user_id','=', user.id)]</field>
         <field name="perm_unlink" eval="True"/>
     </record>
 </odoo>
