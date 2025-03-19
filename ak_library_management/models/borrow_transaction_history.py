@@ -29,7 +29,7 @@ class BorrowTransactionHistory(models.Model):
     borrow_start_date = fields.Date(
         string="Borrow start Date",
         default=datetime.today(),
-        readonly=True
+        # readonly=True
     )
     borrow_end_date = fields.Date(
         string="Borrow End Date",
@@ -37,14 +37,45 @@ class BorrowTransactionHistory(models.Model):
     )
     deposit_amount = fields.Float(
         string="Deposit Amount",
-        required=True,
     )
     is_member = fields.Boolean(
         related='customer_id.is_member'
     )
-    is_borrowing_limit = fields.Boolean()
+    is_borrowing_limit = fields.Boolean(
+        string="Is Borrowing Limit",
+        compute="_compute_is_borrowing_limit",
+        store=True
+    )
 
-    @api.constrains('borrow_start_date', 'borrow_end_date', 'deposit_amount')
+    is_active_transaction = fields.Boolean(
+        string="Is Active Transaction",
+        compute="_compute_is_active_transaction",
+        store=True
+    )
+
+    @api.depends('borrow_end_date')
+    def _compute_is_active_transaction(self):
+        today = date.today()
+        for record in self.search([]):
+            record.is_active_transaction = record.borrow_end_date >= today
+
+    @api.depends('books_ids')
+    def _compute_is_borrowing_limit(self):
+        for rec in self:
+            print("\n\n",rec,"\n\n")
+            borrowing_limit = self.env.user.company_id.borrowing_limit
+            print("\n\nborrowing_limit:::",borrowing_limit,"\n\n")
+            search_record = self.env['borrow.transaction.history'].search([('customer_id', "=", self.customer_id.id)])
+            print("\n\nsearch_record:::",search_record,"\n\n")
+            total_borrowed_books = list(search_record.mapped("books_ids").filtered(
+                lambda book: book.name).mapped("name"))
+            print("\n\ntotal_borrowed_books:::",total_borrowed_books,"\n\n")
+            if len(total_borrowed_books) > borrowing_limit:
+                rec.is_borrowing_limit = True
+            else:
+                rec.is_borrowing_limit = False
+
+    @api.constrains('borrow_start_date', 'borrow_end_date')
     def _check_end_date(self):
         """
         Ensures that the borrow end date is not before the start date.
@@ -53,8 +84,6 @@ class BorrowTransactionHistory(models.Model):
         """
         if self.borrow_end_date < self.borrow_start_date:
             raise ValidationError("Borrow end date should be higher than start date.")
-        if self.deposit_amount == 0 and not self.is_member:
-            raise ValidationError("Deposit amount is required for non member.")
 
     def _cron_send_overdue_mail(self):
         """

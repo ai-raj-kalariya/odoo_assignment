@@ -1,30 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record model="ir.module.category" id="module_category_stock_warehouse">
         <field name="name">Stock Warehouse</field>
         <field name="sequence">45</field>
     </record>
-
     <record id="group_library_worker" model="res.groups">
         <field name="name">Library Worker</field>
         <field name="category_id" ref="module_category_stock_warehouse"/>
     </record>
-
     <record id="group_library_assistant" model="res.groups">
         <field name="name">Library Assistant</field>
         <field name="category_id" ref="module_category_stock_warehouse"/>
     </record>
-
     <record id="group_library_admin" model="res.groups">
         <field name="name">Library Admin</field>
         <field name="category_id" ref="module_category_stock_warehouse"/>
     </record>
 
     <record id="library_assistant_access_rule" model="ir.rule">
-        <field name="name">Library Assistant Access</field>
+        <field name="name">Library Assistant and Library Worker can not delete borrowed book</field>
         <field name="model_id" ref="ak_library_management.model_product_template"/>
         <field name="domain_force">[('state','!=','borrowed')]</field>
-        <field name="groups" eval="[Command.link(ref('ak_library_management.group_library_assistant')), Command.link(ref('ak_library_management.group_library_worker'))]"/>
+        <field name="groups"
+               eval="[Command.link(ref('ak_library_management.group_library_assistant')), Command.link(ref('ak_library_management.group_library_worker'))]"/>
         <field name="perm_read" eval="False"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>
@@ -32,13 +29,24 @@
     </record>
 
     <record id="library_worker_access_rule" model="ir.rule">
-        <field name="name">Library Worker Access</field>
-        <field name="model_id" ref="ak_library_management.model_borrow_transaction_history"/>
-        <field name="domain_force">[('borrow_start_date','>','borrow_end_date')]</field>
-        <field name="groups" eval="[Command.link(ref('ak_library_management.group_library_worker'))]"/>
+        <field name="name">Workers have active transactions Access</field>
+        <field name="model_id" ref="model_borrow_transaction_history"/>
+        <field name="domain_force">[('is_active_transaction','=',True)]</field>
+        <field name="groups" eval="[(4,ref('ak_library_management.group_library_worker'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="check_borrow_limit" model="ir.rule">
+        <field name="name">Workers can borrowed limited book</field>
+        <field name="model_id" ref="model_borrow_transaction_history"/>
+        <field name="domain_force">[('is_borrowing_limit','=',False)]</field>
         <field name="perm_read" eval="False"/>
-        <field name="perm_write" eval="True"/>
+        <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="True"/>
-        <field name="perm_unlink" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4,ref('ak_library_management.group_library_worker'))]"/>
     </record>
 </odoo>

@@ -95,5 +95,10 @@
 - Create custom controller 
 - Create custom web page and web menu
 
+## [18.0.1.12.4] - 2025-19-03 | Group Access & Record rules
+
+- Create compute method for checking borrow limit and active transaction
+- Fixed group issue in stock warehouse model
+- Create access right for worker can borrow limited book 
 
 

@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='show_effect']" position="after">
                 <group>
-                    <field name="borrowing_limit"/>
+                    <field name="borrowing_limit" groups="ak_library_management.group_library_admin"/>
                 </group>
             </xpath>
         </field>
