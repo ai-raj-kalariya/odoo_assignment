@@ -1,6 +1,6 @@
 {
     "name": "Library",
-    "version": "18.0.1.12.0",
+    "version": "18.0.1.12.3",
     "license": "Other proprietary",
     "depends": ["sale_management", "hr", "stock", "base_automation","website"],
     "author": "Raj",
