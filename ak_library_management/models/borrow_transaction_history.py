@@ -55,21 +55,29 @@ class BorrowTransactionHistory(models.Model):
 
     @api.depends('borrow_end_date')
     def _compute_is_active_transaction(self):
+        """
+        Check the transaction is currently active or not, if
+        active the set true else set false in is_active_transaction boolean field
+        param: None
+        rtype: None
+        """
         today = date.today()
         for record in self.search([]):
             record.is_active_transaction = record.borrow_end_date >= today
 
     @api.depends('books_ids')
     def _compute_is_borrowing_limit(self):
+        """
+        Check previously customer has open borrow transaction or not
+        if transaction the check borrow limit and
+        customer can't borrow more than borrow limit.
+        param: None
+        """
         for rec in self:
-            print("\n\n",rec,"\n\n")
             borrowing_limit = self.env.user.company_id.borrowing_limit
-            print("\n\nborrowing_limit:::",borrowing_limit,"\n\n")
             search_record = self.env['borrow.transaction.history'].search([('customer_id', "=", self.customer_id.id)])
-            print("\n\nsearch_record:::",search_record,"\n\n")
             total_borrowed_books = list(search_record.mapped("books_ids").filtered(
                 lambda book: book.name).mapped("name"))
-            print("\n\ntotal_borrowed_books:::",total_borrowed_books,"\n\n")
             if len(total_borrowed_books) > borrowing_limit:
                 rec.is_borrowing_limit = True
             else:
