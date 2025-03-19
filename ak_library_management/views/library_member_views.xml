@@ -8,9 +8,9 @@
             <list string="Library Members">
                 <field name="membership_no"/>
                 <field name="member_id"/>
-                <field name="email" groups="ak_library_management.group_library_assistant"/>
-                <field name="phone" groups="ak_library_management.group_library_assistant"/>
-                <field name="membership_date" groups="ak_library_management.group_library_assistant"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="membership_date"/>
             </list>
         </field>
     </record>
@@ -32,11 +32,11 @@
                     <group>
                         <group>
                             <field name="member_id"/>
-                            <field name="email" groups="ak_library_management.group_library_assistant"/>
+                            <field name="email"/>
                         </group>
                         <group>
-                            <field name="phone" groups="ak_library_management.group_library_assistant"/>
-                            <field name="membership_date" groups="ak_library_management.group_library_assistant"/>
+                            <field name="phone"/>
+                            <field name="membership_date"/>
                         </group>
                         <group>
                             <field name="html"/>

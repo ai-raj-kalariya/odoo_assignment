@@ -7,5 +7,7 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     borrowing_limit = fields.Integer(
-        string="Borrowing limit"
+        related='company_id.borrowing_limit',
+        string="Borrowing Limit",
+        readonly=False
     )

@@ -16,7 +16,7 @@
             <field name="name">Book Returned Reminder</field>
             <field name="model_id" ref="ak_library_management.model_borrow_transaction_history"/>
             <field name="state">code</field>
-            <field name="code">model.book_returned_reminder()</field>
+            <field name="code">model._cron_book_returned_reminder()</field>
             <field name="active" eval="True"/>
             <field name="interval_type">days</field>
             <field name="interval_number">1</field>

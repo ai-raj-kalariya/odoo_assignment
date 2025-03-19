@@ -75,3 +75,25 @@
 - Added functionality in product template for member can limited book borrowed.(borrowed_limit field)
 - Modify Record rule 
 
+## [18.0.1.12.1] - 2025-19-03 | Borrow Transaction History
+
+- Modify the Borrow Transaction History Wizard to include the same conditions previously applied in
+  the Borrow Transaction
+- Create a create function for creating record in borrow history model
+- Create view for warning wizard
+
+## [18.0.1.12.2] - 2025-19-03 | Group Access & Record rules
+
+- Modify access for book, member, and transaction model
+- Create access right
+- Inherit res company for accessing borrow limit field using in another model.
+- Add is_borrow_limit field in borrow transaction history wizard 
+
+## [18.0.1.12.3] - 2025-19-03 | Custom Controller
+
+- Create new directory for controller
+- Create custom controller 
+- Create custom web page and web menu
+
+
+

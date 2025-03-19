@@ -1,0 +1,10 @@
+<odoo>
+    <template id="custom_web_page_template">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Welcome to custom page</h1>
+                <a class="btn btn-primary" href="/custom/button_action">Click</a>
+            </div>
+        </t>
+    </template>
+</odoo>

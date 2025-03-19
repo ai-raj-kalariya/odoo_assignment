@@ -41,7 +41,7 @@
                     <group>
                         <group>
                             <field name="customer_id"/>
-                            <field name="deposit_amount" invisible="is_member"/>
+                            <field name="deposit_amount" invisible="is_member" groups="ak_library_management.group_library_admin"/>
                         </group>
                         <group>
                             <field name="borrow_start_date"/>
@@ -49,10 +49,6 @@
                             <field name="books_ids" widget="many2many_tags" context="{'add_author':True}"/>
                         </group>
                     </group>
-                    <footer>
-                        <button string="Confirm" name="action_confirm" type="object" class="btn-primary"/>
-                        <button string="Cancel" special="cancel" class="btn-primary"/>
-                    </footer>
                 </sheet>
             </form>
         </field>

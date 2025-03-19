@@ -6,11 +6,23 @@
         <field name="model">borrow.transaction.history.wizard</field>
         <field name="arch" type="xml">
             <form string="Borrowed Book">
-                <field name="message"/>
-                <footer>
-                    <button name="action_confirm" string="Continue" type="object" class="btn-primary" />
-                    <button name="action_cancel" string="Cancel" type="object" class="btn-primary" />
-                </footer>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="deposit_amount" invisible="is_member"/>
+                        </group>
+                        <group>
+                            <field name="borrow_start_date"/>
+                            <field name="borrow_end_date"/>
+                            <field name="books_ids" widget="many2many_tags" context="{'add_author':True}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Confirm" name="action_confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-primary"/>
+                    </footer>
+                </sheet>
             </form>
         </field>
     </record>
