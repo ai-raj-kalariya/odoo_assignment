@@ -6,5 +6,11 @@
             <field name="parent_id" ref="website.main_menu"/>
             <field name="sequence">100</field>
         </record>
+        <record id="contact_web_page_menu" model="website.menu">
+            <field name="name">Contact Page</field>
+            <field name="url">/contacts</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">110</field>
+        </record>
     </data>
 </odoo>

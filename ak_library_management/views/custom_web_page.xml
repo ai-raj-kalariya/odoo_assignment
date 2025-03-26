@@ -1,10 +1,99 @@
 <odoo>
-    <template id="custom_web_page_template">
+    <template id="custom_web_page_template" name="Custom Webpage">
         <t t-call="website.layout">
-            <div class="container">
-                <h1>Welcome to custom page</h1>
+            <div class="container" style="display: ruby;">
+                <h3>Welcome to custom page</h3>
+                <div class="row justify-content-around">
+                    <t t-foreach="employee" t-as="e">
+                        <div class="col-3"/>
+                        <div class="col-3 border border-info m-5px">
+                            <p>
+                                <strong>Name:</strong>
+                                <t t-esc="e.name"/>
+                            </p>
+                            <p>
+                                <strong>Email:</strong>
+                                <t t-esc="e.work_email"/>
+                            </p>
+                            <p>
+                                <strong>Contact:</strong>
+                                <t t-esc="e.work_phone"/>
+                            </p>
+                        </div>
+                        <div class="col-3"/>
+                        <!--                        <div class="col-4"/>-->
+                    </t>
+                </div>
                 <a class="btn btn-primary" href="/custom/button_action">Click</a>
             </div>
         </t>
     </template>
+
+    <template id="contact_list_template" name="Contact List">
+        <t t-call="website.layout">
+            <div class="container">
+                <span class="h3">All Contacts</span>
+                <table class="table table-striped table-dark">
+                    <thead class="table-active">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Partner ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="contacts" t-as="o">
+                            <tr>
+                                <td>
+                                    <t t-esc="o.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="o.email or 'N/A'"/>
+                                </td>
+                                <td>
+                                    <t t-esc="o.phone or 'N/A'"/>
+                                </td>
+                                <td>
+                                    <!--<a t-att-href="keep('/shop/category/%s' % slug(cat), category=0)" t-field="cat.name"/>-->
+                                    <a t-att-href="'/contact/%s' % o.id" t-field="o.id"/>
+                                    <!--                                    <a t-attf-href="/contact/{{ slug(o) }}">-->
+                                    <!--                                        <t t-esc="o.name"/>-->
+                                    <!--                                    </a>-->
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <template id="contact_detail_template" name="Contact Details">
+        <t t-call="website.layout">
+            <div class="container">
+                <h2>Contact Details</h2>
+                <p>
+                    <strong>Name:</strong>
+                    <t t-esc="contact.name"/>
+                </p>
+                <p>
+                    <strong>Email:</strong>
+                    <t t-esc="contact.email or 'N/A'"/>
+                </p>
+                <p>
+                    <strong>Phone:</strong>
+                    <t t-esc="contact.phone or 'N/A'"/>
+                </p>
+                <p>
+                    <strong>Company:</strong>
+                    <t t-esc="contact.company_id.name or 'N/A'"/>
+                </p>
+                <p>
+                    <a href="/contacts" class="btn btn-secondary">Back to Contacts</a>
+                </p>
+            </div>
+        </t>
+    </template>
 </odoo>
+
+

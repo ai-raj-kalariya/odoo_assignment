@@ -101,4 +101,16 @@
 - Fixed group issue in stock warehouse model
 - Create access right for worker can borrow limited book 
 
+## [18.0.1.13.0] - 2025-26-03 | Modify the base Invoice report
+
+- Inherit invoice report and create custom header
+- In header left side Information block and right side address detail
+- Change the invoice document title(e.g.(Invoice INV/2023/0001) to Invoice)
+- Remove Information block in the invoice article
+- Remove Taxes column from the invoice table
+- Adjust Untaxed Amount table based on remove some classes
+- Remove the payment term in the article
+- Give a bold style to table header
+- Hide the Currency detail table which is shown when we change the currency
+
 
