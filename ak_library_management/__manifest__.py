@@ -1,6 +1,6 @@
 {
     "name": "Library",
-    "version": "18.0.1.13.0",
+    "version": "18.0.1.14.0",
     "license": "Other proprietary",
     "depends": ["sale_management", "hr", "stock", "base_automation","website","account"],
     "author": "Raj",
@@ -29,7 +29,7 @@
         "views/stock_warehouse_views.xml",
         "views/library_menu_views.xml",
         "views/custom_web_menu.xml",
-        "views/custom_web_page.xml",
+        "views/custom_contact_web_page_views.xml",
 
         "data/ir_sequence_data.xml",
         "data/ir_cron_data.xml",

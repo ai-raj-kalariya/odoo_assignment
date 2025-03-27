@@ -113,4 +113,8 @@
 - Give a bold style to table header
 - Hide the Currency detail table which is shown when we change the currency
 
+## [18.0.1.14.0] - 2025-27-03 | Dynamic HTTP Controller
 
+- Create a template for display all Odoo contacts using a properly designed Kanban-style layout
+- Added template when clicking on a contact should open its detailed view
+- Modify controller for rendering contacts_web_page templates and detail view

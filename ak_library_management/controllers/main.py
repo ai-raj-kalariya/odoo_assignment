@@ -3,27 +3,33 @@
 from odoo import http
 from odoo.http import request
 
+
 class WebsiteCustomController(http.Controller):
-
-    @http.route('/custom', type='http', auth='public', website=True)
-    def custom_page(self, **kwargs):
-        employee=request.env['hr.employee'].search([])
-        print("\n\nemployee:::::",employee,"\n\n")
-        return request.render("ak_library_management.custom_web_page_template",{'employee':employee})
-
-    @http.route('/custom/button_action', type='http', auth='public', website=True)
-    def button_action(self, **kwargs):
-        return request.redirect('/contactus')
+    """
+    Custom Website Controller for displaying res.partner records.
+    """
 
     @http.route('/contacts', type='http', auth='public', website=True)
-    def list_contacts(self, **kwargs):
+    def list_contacts(self):
+        """
+        Render a custom contact list view using a Kanban-style template.
+        This method fetches all records from the `res.partner` model and passes them
+        to the custom template for rendering.
+        :return: Rendered HTML template displaying the list of contacts.
+        """
         contacts = request.env['res.partner'].search([])
-        print("\n\ncontacts:::::",contacts,"\n\n")
-        return request.render('ak_library_management.contact_kanban_template', {'contacts': contacts})
+        return request.render('ak_library_management.custom_contact_kanban_template',
+                              {'contacts': contacts})
 
-    @http.route('/contact/<int:partner_id>', type='http', auth='public', website=True)
-    def contact_details(self, partner_id, **kwargs):
-        contact = request.env['res.partner'].browse(partner_id)
-        print("\n\ncontact_partner::::::",contact,"\n\n")
-        return request.render('ak_library_management.contact_detail_template', {'contact': contact})
-
+    @http.route('/contacts/<model("res.partner"):partner>/',
+                type='http', auth='public', website=True)
+    def partner_detail(self, partner):
+        """
+        Render a detailed view of a specific contact.
+        When a user clicks on a contact card, this method retrieves the contact details
+        and renders them using a custom detail template.
+        :param partner: The `res.partner` record retrieved from the URL slug.
+        :return: Rendered HTML template displaying the details of the selected contact.
+        """
+        return request.render('ak_library_management.custom_contact_detail_template',
+                              {'partner': partner})
