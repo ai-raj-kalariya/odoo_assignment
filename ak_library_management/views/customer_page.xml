@@ -1,0 +1,44 @@
+<odoo>
+    <template id="custom_customer_detail_template">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card shadow-lg p-4">
+                            <h3 class="text-center mb-4">Contact Form</h3>
+                            <div class="mb-3">
+                                <div class="mb-3">
+                                    <label for="contact" class="form-label">Email</label>
+                                    <input type="tel" class="form-control" id="contact"
+                                           placeholder="Enter Email" required="1"/>
+                                </div>
+                                <p>
+                                    <strong>Company:</strong>
+                                    <!--                                        <t t-esc="partner.company_id.name"/>-->
+                                </p>
+                                <p>
+                                    <strong>Tax ID:</strong>
+                                    <!--                                        <t t-esc="partner.vat"/>-->
+                                </p>
+                                <p>
+                                    <strong>Phone:</strong>
+                                    <!--                                        <t t-esc="partner.phone or 'N/A'"/>-->
+                                </p>
+                                <p>
+                                    <strong>Mobile:</strong>
+                                        <!--                                        <t t-esc="partner.mobile"/>-->
+                                </p>
+                                <p>
+                                    <strong>website:</strong>
+                                    <!--                                        <t t-esc="partner.website"/>-->
+                                </p>
+                            </div>
+                            <button class="btn btn-primary w-50 fetch-btn">Fetch Detail</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
