@@ -5,36 +5,35 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="card shadow-lg p-4">
-                            <h3 class="text-center mb-4">Contact Form</h3>
+                            <h3 class="text-center mb-4">Customer Form</h3>
                             <div class="mb-3">
                                 <div class="mb-3">
-                                    <label for="contact" class="form-label">Email</label>
-                                    <input type="tel" class="form-control" id="contact"
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email"
                                            placeholder="Enter Email" required="1"/>
                                 </div>
-                                <p>
-                                    <strong>Company:</strong>
-                                    <!--                                        <t t-esc="partner.company_id.name"/>-->
-                                </p>
-                                <p>
-                                    <strong>Tax ID:</strong>
-                                    <!--                                        <t t-esc="partner.vat"/>-->
-                                </p>
-                                <p>
-                                    <strong>Phone:</strong>
-                                    <!--                                        <t t-esc="partner.phone or 'N/A'"/>-->
-                                </p>
-                                <p>
-                                    <strong>Mobile:</strong>
-                                        <!--                                        <t t-esc="partner.mobile"/>-->
-                                </p>
-                                <p>
-                                    <strong>website:</strong>
-                                    <!--                                        <t t-esc="partner.website"/>-->
-                                </p>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name"
+                                           readonly="1" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="company" class="form-label">Company</label>
+                                    <input type="text" class="form-control" id="company"
+                                           readonly="1" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taxID" class="form-label">Tax ID</label>
+                                    <input type="text" class="form-control" id="taxID"
+                                           readonly="1" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="tap" class="form-control" id="phone"
+                                           readonly="1" />
+                                </div>
                             </div>
                             <button class="btn btn-primary w-50 fetch-btn">Fetch Detail</button>
-
                         </div>
                     </div>
                 </div>

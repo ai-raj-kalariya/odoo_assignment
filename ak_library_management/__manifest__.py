@@ -1,8 +1,8 @@
 {
     "name": "Library",
-    "version": "18.0.1.14.0",
+    "version": "18.0.1.15.0",
     "license": "Other proprietary",
-    "depends": ["sale_management", "hr", "stock", "base_automation","website","account"],
+    "depends": ["sale_management", "hr", "stock", "base_automation", "website", "account"],
     "author": "Raj",
     "website": "https://www.aktivsoftware.com",
     "data": [
@@ -30,6 +30,7 @@
         "views/library_menu_views.xml",
         "views/custom_web_menu.xml",
         "views/custom_contact_web_page_views.xml",
+        "views/customer_page.xml",
 
         "data/ir_sequence_data.xml",
         "data/ir_cron_data.xml",
@@ -40,9 +41,11 @@
         "wizard/sale_order_wizard_views.xml",
         "wizard/borrow_transaction_history_wizard_views.xml"
     ],
+    'assets': {
+        'web.assets_frontend': ['ak_library_management/static/src/js/customer_fetch.js']
+    },
 
     "installable": True,
     "auto_install": False,
     "application": False,
 }
-# -*- coding: utf-8 -*-

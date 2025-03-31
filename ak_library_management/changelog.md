@@ -118,3 +118,11 @@
 - Create a template for display all Odoo contacts using a properly designed Kanban-style layout
 - Added template when clicking on a contact should open its detailed view
 - Modify controller for rendering contacts_web_page templates and detail view
+
+## [18.0.1.15.0] - 2025-31-03 | JSON Controller
+
+- Create a template for display customer form layout
+- Create http controller for rendering this template and create JSON controller 
+  for fetching customer detail based on input email
+- Create js file for use rpc to call the JSON route and retrieve customer details.
+- Add a new menu (customer) in website 
