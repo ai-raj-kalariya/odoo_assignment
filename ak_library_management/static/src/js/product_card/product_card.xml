@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="pos_custom.ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+
+        <xpath expr="//article[contains(@t-attf-class,'product position-relative')]" position="attributes">
+            <attribute name="t-attf-class">{{props.class}} product position-relative btn btn-light d-flex align-items-stretch p-0 m-0 rounded-0 text-start cursor-pointer</attribute>
+        </xpath>
+
+        <xpath expr="//div[@class='product-content d-flex flex-row px-2 justify-content-between rounded-bottom rounded-3 flex-shrink-1']" position="attributes">
+            <attribute name="style">font-family:Lato,Lucida Grande,Helvetica,Verdana,Arial; justify-content:space-between; height:100%;</attribute>
+            <attribute name="class">product-content d-flex flex-column</attribute>
+        </xpath>
+
+        <xpath expr="//div[contains(@class,'product-name')]" position="after">
+            <span style="color:#421322;">
+                <t t-esc="props.price"/>
+            </span>
+        </xpath>
+    </t>
+</templates>

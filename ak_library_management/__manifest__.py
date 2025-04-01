@@ -1,8 +1,8 @@
 {
     "name": "Library",
-    "version": "18.0.1.15.0",
+    "version": "18.0.1.16.0",
     "license": "Other proprietary",
-    "depends": ["sale_management", "hr", "stock", "base_automation", "website", "account"],
+    "depends": ["sale_management", "hr", "stock", "base_automation", "website", "account","point_of_sale"],
     "author": "Raj",
     "website": "https://www.aktivsoftware.com",
     "data": [
@@ -42,7 +42,12 @@
         "wizard/borrow_transaction_history_wizard_views.xml"
     ],
     'assets': {
-        'web.assets_frontend': ['ak_library_management/static/src/js/customer_fetch.js']
+        'web.assets_frontend': [
+            'ak_library_management/static/src/js/customer_fetch.js'],
+
+        'point_of_sale._assets_pos': [
+            'ak_library_management/static/src/js/product_card/*',
+        ],
     },
 
     "installable": True,

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="pos_custom.ProductScreen" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension">
+
+        <xpath expr="//div[contains(@t-attf-class,'product-list')]" position="attributes">
+            <attribute name="t-attf-class">product-list d-grid overflow-y-auto px-2 pt-0 pb-2</attribute>
+            <attribute name="style">gap:3px; background:#dbd9d9;</attribute>
+        </xpath>
+
+        <xpath expr="//button[contains(@class,'btn-switchpane pay-button btn btn-lg w-50')]" position="attributes">
+            <attribute name="style">background-color:#017e84;</attribute>
+        </xpath>
+
+        <xpath expr="//button[contains(@class,'btn-switchpane pay-button btn btn-lg w-50')]/span" position="attributes">
+            <attribute name="style">background-color:#017e84;</attribute>
+        </xpath>
+
+    </t>
+</templates>

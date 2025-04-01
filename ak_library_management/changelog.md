@@ -126,3 +126,8 @@
   for fetching customer detail based on input email
 - Create js file for use rpc to call the JSON route and retrieve customer details.
 - Add a new menu (customer) in website 
+
+## [18.0.1.16.0] - 2025-01-04 | Front-end - Practical Task (POS 18 products section)
+
+- Inherit and Modify base POS product_card template and product_screen template
+
