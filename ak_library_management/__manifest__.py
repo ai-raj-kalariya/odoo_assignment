@@ -31,6 +31,7 @@
         "views/custom_web_menu.xml",
         "views/custom_contact_web_page_views.xml",
         "views/customer_page.xml",
+        "views/templates_inherit_views.xml",
 
         "data/ir_sequence_data.xml",
         "data/ir_cron_data.xml",

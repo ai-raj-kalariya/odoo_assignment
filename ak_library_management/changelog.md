@@ -131,3 +131,7 @@
 
 - Inherit and Modify base POS product_card template and product_screen template
 
+## [18.0.1.17.0] - 2025-02-04 | Front-end - Practical Task (Download Product Images)
+
+- Modify the website product template to include a Download button
+- Create an HTTP Controller (/download_images)

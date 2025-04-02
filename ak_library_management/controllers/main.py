@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from pickle import FALSE
 
 from odoo import http
 from odoo.http import request
@@ -67,3 +66,4 @@ class WebsiteCustomController(http.Controller):
             'phone': partner.phone or "No Phone",
             'vat': partner.vat or "No TaxID",
         }
+
