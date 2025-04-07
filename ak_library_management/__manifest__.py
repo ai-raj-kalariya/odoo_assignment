@@ -1,8 +1,8 @@
 {
     "name": "Library",
-    "version": "18.0.1.16.0",
+    "version": "18.0.1.16.1",
     "license": "Other proprietary",
-    "depends": ["sale_management", "hr", "stock", "base_automation", "website", "account","point_of_sale"],
+    "depends": ["sale_management", "hr", "stock", "base_automation", "website_sale", "purchase","point_of_sale"],
     "author": "Raj",
     "website": "https://www.aktivsoftware.com",
     "data": [
@@ -40,7 +40,7 @@
 
         "wizard/borrow_warning_wizard_views.xml",
         "wizard/sale_order_wizard_views.xml",
-        "wizard/borrow_transaction_history_wizard_views.xml"
+        "wizard/borrow_transaction_history_wizard_views.xml",
     ],
     'assets': {
         'web.assets_frontend': [
