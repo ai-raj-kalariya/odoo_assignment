@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="stock_picking_form_view_inherit_add_job" model="ir.ui.view">
+        <field name="name">view.picking.form.inherit.add.job</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="job_name" readonly="origin != False"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

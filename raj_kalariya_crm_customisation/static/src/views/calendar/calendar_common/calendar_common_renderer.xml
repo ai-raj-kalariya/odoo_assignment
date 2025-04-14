@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="pos_custom.ProductCard" t-inherit="web.CalendarCommonRenderer.event" t-inherit-mode="extension">
+        <xpath expr="//t[contains(@t-if,'!isTimeHidden')]" position="before">
+<!--            <div class="o_event_title text-truncate" t-out="title"/>-->
+            <div t-esc="job_name"/>
+            <div>HELLO</div>
+
+        </xpath>
+<!--        <xpath expr="//t[contains(@t-if,'!isTimeHidden')]" position="attributes">-->
+<!--            <attribute t-if="object">-->
+<!--               <div class="o_event_title text-truncate" t-out="title"/>-->
+<!--                <p>Hello</p>-->
+<!--            </attribute>-->
+<!--        </xpath>-->
+    </t>
+</templates>
