@@ -8,7 +8,7 @@
         <xpath expr="//div[@name='company_address']" position="after">
             <div class="row" t-if="o and o._name == 'account.move'">
                 <div class="col-6">
-                    <table class="table-borderless" style="width:350px;">
+                    <table class="table-borderless" style="width:350px; margin-bottom:80px">
                         <tr>
                             <td>
                                 <span>Invoice Reference:</span>
@@ -47,8 +47,8 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-2"/>
-                <div class="col-4 text-left">
+                <div class="col-4"/>
+                <div class="col-2 text-left">
                     <strong>
                         <ul class="list-unstyled">
                             <li>
@@ -85,7 +85,7 @@
             <attribute name="t-if">not o</attribute>
         </xpath>
         <xpath expr="//div[@class='clearfix invoice_main']/div[@class='page mb-4']/t[1]" position="after">
-            <div style="padding-top: 75px;">
+            <div style="padding-top: 40px;">
                 <strong>
                     <p>Invoice</p>
                 </strong>
@@ -135,10 +135,10 @@
     </template>
 
     <template id="document_tax_totals_template_inherit" inherit_id="account.document_tax_totals_template">
-        <xpath expr="//tr[@class='o_subtotal']/td[1]" position="attributes">
-            <attribute name="style">font-weight:bold;</attribute>
+        <xpath expr="//tr[@class='o_subtotal']" position="attributes">
+            <attribute name="style">font-weight:bold; margin-top:5px;</attribute>
         </xpath>
-        <xpath expr="//tr[@class='o_taxes']/t/td[1]" position="attributes">
+        <xpath expr="//tr[@class='o_taxes']" position="attributes">
             <attribute name="style">font-weight:bold;</attribute>
         </xpath>
     </template>

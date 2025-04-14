@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 {
     "name": "Library",
-    "version": "18.0.1.16.1",
+    "version": "18.0.1.17.1",
     "license": "Other proprietary",
-    "depends": ["sale_management", "hr", "stock", "base_automation", "website_sale", "purchase","point_of_sale"],
+    "depends": ["sale_management", "hr", "stock", "base_automation", "website_sale",
+                "purchase", "point_of_sale", "account"],
     "author": "Raj",
     "website": "https://www.aktivsoftware.com",
     "data": [

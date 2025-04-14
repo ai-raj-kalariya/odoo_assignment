@@ -135,3 +135,8 @@
 
 - Modify the website product template to include a Download button
 - Create an HTTP Controller (/download_images)
+
+## [18.0.1.17.1] - 2025-14-04 | Modify the base Invoice report
+
+- Showing Bank details on report when multiple pages are print
+- Fixed spacing issue and remove unnecessary space 
