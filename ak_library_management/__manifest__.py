@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Library",
-    "version": "18.0.1.17.1",
+    "version": "18.0.1.17.2",
     "license": "Other proprietary",
     "depends": ["sale_management", "hr", "stock", "base_automation", "website_sale",
                 "purchase", "point_of_sale", "account"],
@@ -46,7 +46,10 @@
     ],
     'assets': {
         'web.assets_frontend': [
-            'ak_library_management/static/src/js/customer_fetch.js'],
+            'ak_library_management/static/src/js/customer_fetch.js',
+            'ak_library_management/static/src/js/add_to_cart.js',
+             # 'ak_library_management/static/src/scss/website_sale.scss'
+        ],
 
         'point_of_sale._assets_pos': [
             'ak_library_management/static/src/js/product_card/*',

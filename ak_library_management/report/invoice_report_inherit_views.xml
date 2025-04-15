@@ -37,14 +37,16 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <span>Payment Term:</span>
-                            </td>
-                            <td>
-                                <span t-field="o.invoice_payment_term_id"/>
-                            </td>
-                        </tr>
+                        <t t-if="o.invoice_payment_term_id">
+                            <tr>
+                                <td>
+                                    <span>Payment Term:</span>
+                                </td>
+                                <td>
+                                    <span t-field="o.invoice_payment_term_id"/>
+                                </td>
+                            </tr>
+                        </t>
                     </table>
                 </div>
                 <div class="col-4"/>

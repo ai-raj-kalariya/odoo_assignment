@@ -140,3 +140,7 @@
 
 - Showing Bank details on report when multiple pages are print
 - Fixed spacing issue and remove unnecessary space 
+
+## [18.0.1.17.2] - 2025-15-04 | Modify the base Invoice report
+
+- Manage visibility of payment term
