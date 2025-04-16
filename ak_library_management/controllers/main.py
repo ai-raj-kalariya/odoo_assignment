@@ -17,20 +17,21 @@ class WebsiteCustomController(http.Controller):
         to the custom template for rendering.
         :return: Rendered HTML template displaying the list of contacts.
         """
-        contacts = request.env['res.partner'].search([])
+        contacts = request.env['res.partner'].sudo().search([])
         return request.render('ak_library_management.custom_contact_kanban_template',
                               {'contacts': contacts})
 
-    @http.route('/contacts/<model("res.partner"):partner>/',
+    @http.route('/contacts/<slug>',
                 type='http', auth='public', website=True)
-    def partner_detail(self, partner):
+    def partner_detail(self, **args):
         """
         Render a detailed view of a specific contact.
         When a user clicks on a contact card, this method retrieves the contact details
         and renders them using a custom detail template.
-        :param partner: The `res.partner` record retrieved from the URL slug.
+        :param args: The `res.partner` record retrieved from the URL slug.
         :return: Rendered HTML template displaying the details of the selected contact.
         """
+        partner = request.env['res.partner'].sudo().search([('contact_slug', '=', args['slug'])])
         return request.render('ak_library_management.custom_contact_detail_template',
                               {'partner': partner})
 
@@ -66,4 +67,3 @@ class WebsiteCustomController(http.Controller):
             'phone': partner.phone or "No Phone",
             'vat': partner.vat or "No TaxID",
         }
-

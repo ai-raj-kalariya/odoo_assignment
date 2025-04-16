@@ -144,3 +144,9 @@
 ## [18.0.1.17.2] - 2025-15-04 | Modify the base Invoice report
 
 - Manage visibility of payment term
+
+## [18.0.1.18.0] - 2025-16-04 | Dynamic HTTP Controller
+
+- Added new js file for click event for contact web page
+- Added New field contact-slug in res.partner for slugify
+- Modify the controller to retrieve partner detail 
