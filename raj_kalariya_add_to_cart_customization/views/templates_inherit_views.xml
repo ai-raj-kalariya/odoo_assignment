@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_item_inherit" inherit_id="website_sale.products_item">
+        <xpath expr="//div[hasclass('o_wsale_product_btn')]" position="inside">
+            <button t-if="product.sudo().qty_available" type="button" class="btn btn-primary btn-sm add_to_cart"
+                    t-att-data-product-id="product.product_variant_id.id">
+                <i class="fa fa-shopping-cart mr-1"/>
+            </button>
+            <button t-if="product.sudo().qty_available == 0" disabled="1" type="button"
+                    class="btn btn-primary btn-sm add_to_cart"
+                    t-att-data-product-id="product.product_variant_id.id">
+                <i class="fa fa-shopping-cart mr-1"/>
+            </button>
+        </xpath>
+        <xpath expr="//div[@class ='product_price']"
+               position="after">
+            <div style="width:100%"/>
+            <div>
+                <span t-if="product.sudo().qty_available == 0" style="color:red;">Out of Stock</span>
+                <div t-if="product.sudo().qty_available" style="color:green;">
+                    <span>On Hand:</span>
+                    <span t-field="product.sudo().qty_available"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
