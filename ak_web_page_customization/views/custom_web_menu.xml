@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="contact_web_page_menu" model="website.menu">
+            <field name="name">Contact Page</field>
+            <field name="url">/contacts</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">110</field>
+        </record>
+    </data>
+</odoo>

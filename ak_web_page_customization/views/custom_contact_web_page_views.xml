@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_contact_form_template" name="Contact Form">
+        <t t-call="website.layout">
+            <div class="m-5 border border-5 rounded" style="padding: 20px; max-width: 800px;">
+                <form id="contactForm" action="">
+                    <div class="d-flex justify-content-between mb-4">
+                        <div class="w-75">
+                            <label>
+                                <strong>Name</strong>
+                            </label>
+                            <input id="contact_name" type="text" class="form-control"
+                                   t-att-value="partner.name" readonly="1"/>
+                        </div>
+                        <div class="w-25 text-end">
+                            <img t-if="partner.image_1920" t-att-src="image_data_uri(partner.image_1920)"
+                                 class="img-thumbnail" style="height:100px; width:100px;" alt="Partner Image"/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="mt-2">
+                                <strong>Tax ID</strong>
+                            </label>
+                            <input id="input_tax_id" type="text" name="vat" t-att-value="partner.vat" class="form-control" readonly="1"/>
+
+                            <label class="mt-2">
+                                <strong>Website</strong>
+                            </label>
+                            <input id="website" type="text" name="website" t-att-value="partner.website" class="form-control"
+                                   readonly="1"/>
+
+                            <label class="mt-2">
+                                <strong>Job Position</strong>
+                            </label>
+                            <input id="job_position" type="text" name="function" t-att-value="partner.function" class="form-control"
+                                   readonly="1"/>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>
+                                <strong>Email</strong>
+                            </label>
+                            <input id="contact_email" type="email" class="form-control" readonly="1"
+                                   t-att-value="partner.email"/>
+
+                            <label class="mt-2">
+                                <strong>Phone</strong>
+                            </label>
+                            <input id="contact_phone" type="text" class="form-control" readonly="1"
+                                   t-att-value="partner.phone"/>
+
+                            <label class="mt-2">
+                                <strong>Mobile</strong>
+                            </label>
+                            <input id="contact_mobile" type="text" name="mobile" t-att-value="partner.mobile" class="form-control"
+                                   readonly="1"/>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4" id="my-button">
+                        <a href="/contacts" class="btn btn-secondary">Back to Contacts</a>
+                        <div>
+                            <button id="editBtn" class="btn btn-primary">Edit</button>
+                            <button id="saveBtn" type="submit"  t-att-data-id="partner.id" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="custom_contact_kanban_template">
+        <t t-call="website.layout">
+            <div class="contacts_page">
+                <div class="container">
+                    <div class="row mb-2 mt-2">
+                        <t t-foreach="contacts" t-as="o">
+                            <div class="col-6 col-md-4 mt-1 mb-1">
+                                <div t-att-data-contact-slug="o.contact_slug"
+                                     class="link-offset-2 contact-card link-underline link-underline-opacity-0">
+                                    <div class="card flex-row pe-5">
+                                        <img t-if="o.image_1920" t-att-src="image_data_uri(o.image_1920)"
+                                             class="card-img-left" style="height:100px; width:100px;"
+                                             loading='lazy' alt="partner image"/>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <t t-out="o.name"/>
+                                            </h5>
+                                            <p class="card-text" style="font-size:12px">
+                                                <t t-out="o.email"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
