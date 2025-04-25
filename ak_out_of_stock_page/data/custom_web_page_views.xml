@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_out_of_stock_template">
+        <t t-call="website.layout">
+            <div class="contacts_page">
+                <div class="container">
+                    <div class="row mb-2 mt-2">
+                        <t t-foreach="products" t-as="o">
+                            <div class="col-6 col-md-4 mt-1 mb-1" style="width:500px; height:200px;">
+                                <div class="link-offset-2 contact-card link-underline link-underline-opacity-0">
+                                    <div class="card flex-row pe-5">
+                                        <img t-if="o.image_1920" t-att-src="image_data_uri(o.image_1920)"
+                                             class="card-img-left" style="height:100px; width:100px;"
+                                             loading='lazy' alt="product image"/>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <t t-out="o.name"/>
+                                            </h5>
+                                            <div class="row">
+                                                <div>
+                                                    <t t-if="o.default_code">
+                                                        <span>price:
+                                                            <t t-out="o.list_price"/>
+                                                        </span>
+                                                    </t>
+                                                </div>
+                                                <div>
+                                                    <t t-if="o.default_code">
+                                                        <span>Reference:
+                                                            <t t-out="o.default_code"/>
+                                                        </span>
+                                                    </t>
+                                                </div>
+                                                <div>
+                                                    <t t-if="o.default_code">
+                                                        <span>barcode
+                                                            <t t-out="o.barcode"/>
+                                                        </span>
+                                                    </t>
+                                                </div>
+                                                <div class="card-text mt-2">
+                                                    <span>Out-of-Stock Message
+                                                        <t t-out="o.out_of_stock_message"/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

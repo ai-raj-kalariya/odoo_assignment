@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_my_dashboard_template">
+        <t t-call="website.layout">
+            <div class="contacts_page">
+                <div class="container">
+                    <h4 class="text-center mt-2 mb-4">My Dashboard</h4>
+                    <button style="text-align:center;" class="btn btn-primary" type="object" name="action_print_pdf">
+                        Download
+                    </button>
+                    <div class="d-flex justify-content-around mb-2 mt-2">
+                        <div class="border border-danger p-2" style="width:30%">
+                            <h5 style="text-align:center;">Invoice</h5>
+                            <p class="d-flex justify-content-around">
+                                <span>Total Amount Due</span>
+                                <span>
+                                    <t t-out="total_amount"/>
+                                </span>
+                            </p>
+                            <p class="d-flex justify-content-around">
+                                <span>Paid</span>
+                                <t t-out="paid"/>
+                            </p>
+                            <p class="d-flex justify-content-around">
+                                <span>Due</span>
+                                <t t-out="amount_due"/>
+                            </p>
+                        </div>
+                        <div class="border border-danger p-2" style="width:30%">
+                            <h5 style="text-align:center;">Quotations</h5>
+                            <p class="d-flex justify-content-around">
+                                <span>Total Quotations</span>
+                                <span>
+                                    <t t-out="quotations"/>
+                                </span>
+                            </p>
+                            <p class="d-flex justify-content-around">
+                                <span>Confirmed</span>
+                                <span>
+                                    <t t-out="conformed"/>
+                                </span>
+
+                            </p>
+                            <p class="d-flex justify-content-around">
+                                <span>Cancelled</span>
+                                <span>
+                                    <t t-out="canceled"/>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="border border-danger p-2 " style="width:30%">
+                            <h5 style="text-align:center;">Deliveries</h5>
+                            <p class="d-flex justify-content-around">
+                                <span>Deliveries</span>
+                                <span>
+                                    <t t-out="delivery"/>
+                                </span>
+                            </p>
+                            <p class="d-flex justify-content-around">
+                                <span>Delivered</span>
+                                <span>
+                                    <t t-out="delivered"/>
+                                </span>
+
+                            </p>
+                            <p class="d-flex justify-content-around">
+                                <span>Pending</span>
+                                <span>
+                                    <t t-out="pending"/>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
