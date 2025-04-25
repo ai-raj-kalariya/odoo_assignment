@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--Form view-->
+    <record id="product_catalog_wizard_views" model="ir.ui.view">
+        <field name="name">product.catalog.wizard.views</field>
+        <field name="model">product.catalog.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product Catalog">
+                <sheet>
+                    <group>
+                        <field name="catalog_style"/>
+                        <field name="product_ids" widget="many2many_tags"/>
+                        <field name="page_break_after"/>
+                    </group>
+                    <footer>
+                        <button string="Generate" type="object" name="action_print_pdf" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-primary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_catalog_wizard_actions" model="ir.actions.act_window">
+        <field name="name">Product Catalog</field>
+        <field name="res_model">product.catalog.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

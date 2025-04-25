@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem
+            id="product_catalog_generator_menu"
+            name="Product Catalog Generator"
+            parent="sale.menu_sale_report"
+            sequence="50"
+            action="product_catalog_wizard_actions"/>
+</odoo>
