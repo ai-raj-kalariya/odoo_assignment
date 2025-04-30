@@ -44,36 +44,37 @@
     </template>
 
     <template id="product_catalog_style_2_template">
-        <div class="article">
-            <t t-set="counter" t-value="0"/>
-            <div>
-                <t t-foreach="o.product_ids" t-as="product">
-                    <div style="display: inline-block; width:47%; height:475px; border: 2px dashed purple; text-align:center; padding: 5px 10px 5px 10px; margin:10px; ">
-                        <p t-field="product.name" style="font-size:20px; font-weight:bold;"/>
-                        <img t-if="product.image_1920" t-att-src="image_data_uri(product.image_1920)"
-                             style="height:170px; width:100%;"/>
-                        <img t-if="not product.image_1920"
-                             style="height:170px; width:100%; object-fit:cover;" alt="product image"/>
-                        <p style="background-color: yellow; text-align:center; padding: 3px 8px; font-weight: bold; margin-bottom: 5px;"
-                           t-field="product.default_code"/>
-                        <p style="background:yellow; padding: 20px; text-align:center;">
-                            <span t-field="product.list_price"
-                                  t-options='{"widget": "monetary","display_currency": product.currency_id}'/>
-                        </p>
-                        <hr style="color:#b05fa5;"/>
-                        <t t-if="not product.description_sale">
-                            <p style="text-align:center;">No Description</p>
-                        </t>
-                        <p t-out="product.description_sale" style="padding-bottom:80px"/>
-                    </div>
-                    <t t-set="counter" t-value="counter + 1"/>
-                    <t t-if="counter == 4">
-                        <div style="page-break-after: always;"/>
-                        <t t-set="counter" t-value="0"/>
+        <t t-set="products" t-value="[o.product_ids[i:i+2] for i in range(0, len(o.product_ids), 2)]"/>
+
+        <table style="width: 100%; border-collapse: separate; border-spacing: 20px;">
+            <t t-foreach="products" t-as="product_row">
+                <tr>
+                    <t t-foreach="product_row" t-as="product">
+                        <td style="width: 47%; height: 520px; border: 2px dashed purple; vertical-align: top; text-align: center; padding: 10px;">
+                            <p style="font-size:20px; font-weight:bold;">
+                                <t t-esc="product.name"/>
+                            </p>
+                            <img t-if="product.image_1920" t-att-src="image_data_uri(product.image_1920)"
+                                 style="height:170px; width:100%;"/>
+                            <img t-if="not product.image_1920"
+                                 style="height:170px; width:100%; object-fit:cover;" alt="product image"/>
+                            <p style="background-color: yellow; padding: 3px 8px; font-weight: bold; margin-bottom: 5px;"
+                               t-field="product.default_code"/>
+                            <p style="background:yellow; padding: 10px; font-size:16px;">
+                                <span t-field="product.list_price"
+                                      t-options='{"widget": "monetary","display_currency": product.currency_id}'/>
+                            </p>
+                            <div style="height: 60px; overflow: hidden; font-size:14px;">
+                                <t t-if="product.description_sale">
+                                    <t t-esc="product.description_sale"/>
+                                </t>
+                            </div>
+                            <hr style="color:#b05fa5; margin-top:10px;"/>
+                        </td>
                     </t>
-                </t>
-            </div>
-        </div>
+                </tr>
+            </t>
+        </table>
     </template>
 
     <template id="product_catalog_style_1_report_template">
@@ -106,7 +107,8 @@
         <field name="header_line" eval="False"/>
         <field name="header_spacing">10</field>
         <field name="dpi">90</field>
-    </record>z
+    </record>
+    z
 
     <record id="custom_product_catalog_style_1_report_id" model="ir.actions.report">
         <field name="name">Product Catalog Style 1</field>

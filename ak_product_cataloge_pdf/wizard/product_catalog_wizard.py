@@ -36,7 +36,7 @@ class ProductCatalogWizard(models.TransientModel):
         """
         if self.page_break_after > 5:
             raise ValidationError("More than 5 product can not print in single page.")
-        if self.page_break_after < 1:
+        if self.page_break_after < 1 and self.catalog_style != 'style2':
             raise ValidationError("At least 1 select in page break after field.")
 
     def action_print_pdf(self):
