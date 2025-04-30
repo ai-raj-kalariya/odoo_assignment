@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Add to cart",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "license": "Other proprietary",
     "depends": ["stock", "website_sale"],
     "author": "Raj",
     "website": "https://www.aktivsoftware.com",
     "data": [
-        "security/ir.model.access.csv",
         "views/templates_inherit_views.xml",
     ],
     'assets': {

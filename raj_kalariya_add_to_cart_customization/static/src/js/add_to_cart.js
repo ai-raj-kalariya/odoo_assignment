@@ -14,8 +14,11 @@ publicWidget.registry.ProductListAddToCart = publicWidget.Widget.extend({
         let productId = $(ev.currentTarget).data('product-id');
         rpc("/shop/cart/update_json",{'product_id': productId,'add_qty':1}).then(
             function(data){
-                var $quantity = $(".my_cart_quantity")
-                $quantity.text(data.cart_quantity)
+                 $(".my_cart_quantity")
+                        .parents('li.o_wsale_my_cart').removeClass('d-none').end()
+                        .toggleClass('d-none', data.cart_quantity === 0)
+                        .addClass('o_mycart_animation').delay(300)
+                        .text(data.cart_quantity)
             });
      }
 });
