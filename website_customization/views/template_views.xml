@@ -1,0 +1,23 @@
+<odoo>
+    <template id="web_shop_customization_inherit_products" inherit_id="website_sale.products">
+        <xpath expr="//div[@id='products_grid']/div[@class='o_wsale_products_grid_table_wrapper pt-3 pt-lg-0']"
+               position="attributes">
+            <attribute name="class">o_wsale_products_grid_table_wrapper pt-3 pt-lg-0 row</attribute>
+        </xpath>
+        <xpath expr="//section[@id='o_wsale_products_grid']" position="attributes">
+            <attribute name="t-attf-class">
+                col-6 o_wsale_products_grid_table grid {{grid_md_allow_custom_cols and
+                'o_wsale_products_grid_table_md'}}
+            </attribute>
+        </xpath>
+        <xpath expr="//section[@id='o_wsale_products_grid']" position="after">
+            <section class="col-6 border">
+                <span class="row" id="custom_cart_items"/>
+                <div id="cart_empty_message"
+                     class="alert alert-info">
+                    Your cart is empty!
+                </div>
+            </section>
+        </xpath>
+    </template>
+</odoo>
